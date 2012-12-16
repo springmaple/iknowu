@@ -53,7 +53,7 @@ $(document).ready(function(){
     
     // ****** register change password button
     $("#profileEditChangePassword").click(function(){
-        window.location = "http://localhost/iknowu/public/profile/editpassword"; 
+        window.location = "http://www.iknowu.com/iknowu/public/profile/editpassword"; 
     });
 
     // ******* register profile deactivating actions
@@ -93,7 +93,7 @@ $(document).ready(function(){
         $.ajax({
             type: 'POST',
             dataType: 'json',
-            url: 'http://localhost/iknowu/public/ajax/profileedit?format=json',
+            url: 'http://www.iknowu.com/iknowu/public/ajax/profileedit?format=json',
             async: false,
             timeout: 15000,
             data: {

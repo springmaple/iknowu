@@ -9,7 +9,7 @@ function Facebook_login() {
             // alert("connected");
             // accessToken = response.authResponse.accessToken;
             $.ajax({
-                url: "http://localhost/iknowu/public/ajax/fbauth?format=html",
+                url: "http://www.iknowu.com/iknowu/public/ajax/fbauth?format=html",
                 type: "GET",
                 dataType: "html",
                 async: false,

@@ -111,7 +111,7 @@ class RegController extends Zend_Controller_Action {
         // ******************************************************
         // ************ Variables Initializations ***************
         // ******************************************************
-        $uid = $this->_getParam("uid");
+        $uid = $this->_getParam("forgotPasswordUid");
         $password = $this->_getParam("forgotPasswordNewPassword");
         $bcrypt = new Bcrypt();
         $userDb = new Application_Model_DbTable_User;

@@ -98,7 +98,7 @@ $(document).ready(
                 $.ajax({
                     type: 'POST',
                     dataType: 'json',
-                    url: 'http://localhost/iknowu/public/ajax/auth?format=json',
+                    url: 'http://www.iknowu.com/iknowu/public/ajax/auth?format=json',
                     async: false,
                     data: {
                         email: email, 
@@ -132,7 +132,7 @@ $(document).ready(
         // ********* register signoutLink
         $("#signoutLink").click(function(){
             $.ajax({
-                url: "http://localhost/iknowu/public/ajax/signout?format=html",
+                url: "http://www.iknowu.com/iknowu/public/ajax/signout?format=html",
                 type: "GET",
                 dataType: "html",
                 async: false,
