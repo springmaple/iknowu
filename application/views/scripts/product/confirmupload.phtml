@@ -1,0 +1,73 @@
+<div class="confirmUploadConsentDiv">
+    <h3>Seller Consent</h3>
+    <p>To sell your product in our website, you have to agree with the following sentence.</p>
+    <p><em>*IMPORTANT NOTE:</em> You will not be able to edit the details anymore after the product is uploaded.</p>
+    <div>
+        <p>
+            <input type="checkbox" name="agree" id="agree" class="agree">
+            <label for="agree">I agree that the product that will be delivered to the customer is exactly the same as the information displayed and I will always be honest in the deal.</label> 
+        </p>
+        <span id="confirmUploadButton" name="confirmUploadButton" class="simpleBoxButton">Confirm and Upload</span>
+    </div>
+</div>
+
+<form id="confirmUploadForm" name="confirmUploadForm" method="get" action="uploaded">
+<input type="hidden" name="key" value="<?= md5($this->productUploadName) ?>">
+<!-- Preview starts here -->
+<div class="productIndexContainerDiv">
+    <table class="productIndexTable">
+        <tr>
+            <td rowspan="2">
+                <!-- image previews -->
+                <div class="productIndexImagesDiv simpleBox">
+                    <div id="slides">
+                        <div class="slides_container">
+                            <?php
+                            foreach ($this->productUploadImages as $image) {
+                                echo "<div>";
+                                echo "<img title='Click to navigate' class='productIndexSlidesImg' src='". ROOT_URI ."/images/products/tmp/$image'>";
+                                echo "</div>";
+                            }
+                            ?>
+                        </div>
+                    </div>
+                </div>
+            </td>
+            <td  class="productUploadNameTd">
+                <!-- product previews -->
+                <div class="productIndexNameDiv">
+                    <?= $this->productUploadName ?>
+                </div>
+            </td>
+            <td>
+                <img class="profileEditQuestionMark" src="<?= ROOT_URI . "/images/mslc/moreInfo.jpg" ?>">
+                <span class="simpleBoxTooltip">The offer price for this item is <?= $this->productUploadPrice ?></span>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div class="productIndexDescriptionDiv"><?= $this->productUploadDescription ?></div>
+                <div>
+                    <img id="productIndexPriceImg" src =" <?= ROOT_URI . "/images/mslc/price.jpg" ?> " class="productIndexPriceImg">
+                    <span class="simpleBoxTooltip">The offer price for this item is <?= $this->productUploadPrice ?></span>
+                    <span class="productIndexPriceText"><?= $this->productUploadPrice ?></span>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <div class="simpleBox productIndexSizeDiv">
+        <!-- product availability -->
+        <h3>Available in:</h3>
+        <?php
+        // action body
+        // do loop to get sizes
+        $sizes = $this->productUploadSizes;
+        foreach ($sizes as $key => $amount) {
+            ?>
+            <div><?= $key ?>: <?= $amount ?></div>
+            <?php
+        }
+        ?>
+    </div>
+</div>
+</form>

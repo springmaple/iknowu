@@ -1,0 +1,181 @@
+.headerContainerOuter {
+    display: block;
+    box-shadow: black 0 0 8px;
+}
+
+.headerContainer {
+    text-align: center;
+    border-bottom: #d3d3d3 solid 1px;
+    height: 38px;
+    background-color: #f9f8f6;
+}
+.header {
+    display: inline-block;
+    position: relative;
+    width: 900px;
+    color: black;
+    margin: 0;
+}
+.logo {
+    display: inline-block;
+    font-family: 'timeburner';
+    font-weight: bolder;
+    font-size: 2em;
+    color: grey;
+    float: left;
+}
+.logo:hover{
+    cursor: pointer;
+}
+.personalStuffUl {
+    display: inline;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    float: right;
+    height: 100%;
+}
+.personalStuffUl li {
+    clear: right;
+    display: inline-block;
+    float: left;
+    height: 38px;
+    padding: 0;
+}
+.personalStuffUl li:hover {
+    background-color: #d3d3d3;
+    cursor: pointer;
+}
+
+
+.signinLink {
+    text-decoration: none;
+    color: black;
+}
+.signinLink:hover {
+    color: #cd0a0a;
+}
+.signinDIV {
+    font-family: verdana;
+    font-size: 0.9em;
+}
+.signinTable {
+    text-align: left;
+}
+.forgotPassword {
+    display: block;
+    font-size: 0.75em;
+}
+#signinLog {
+    display: block;
+    font-size: 0.7em;
+    font-style: italic;
+    padding-left: 10px;
+}
+.register {
+    text-decoration: none;
+    color: #0398CA;
+    font-size: 0.9em;
+}
+.signinWaitImg {
+    display: none;
+    float:right;
+    width: 25px;
+    height: 25px;
+}
+
+/* After logged in */
+.headerMiniIconA {
+    display: block;
+    height: 100%;
+    color: black;
+    padding: 8px 8px 0 8px;
+    margin: 0;
+}
+.headerIconImg {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+}
+.headerMiniIconText {
+    display: inline-block;
+    font-weight: 600;
+    font-size: 0.8em;
+}
+.avatar {
+    height: 39px;
+    width: 39px;
+}
+
+.profileControlDropdownMenu {
+    width: 150px;
+    clear: left;
+    display: none;
+    margin-top: -7px;
+    margin-left: -22px;
+    background-color: white;
+    padding: 0;
+    z-index: 100;
+    border-top: none;
+    border: #d3d3d3 solid 1px;
+}
+.dropdownList {
+    margin: 0;
+    padding: 0;
+}
+.dropdownList li{
+    float: none;
+    display: block;
+    list-style: none;
+    text-align: left;
+    padding: 0;
+}
+.dropdownList li:hover{
+    background-color: #d3d3d3;
+}
+.headerProfileNavi_a {
+    padding: 10px 20px 10px 20px;
+    display: inline-block;
+    color: black;
+    margin: 0;
+}
+.headerProfileNavi_a:hover {
+    color: black;
+}
+.myCartPopup {
+    position: absolute;
+    right: 0;
+    min-width: 300px;
+}
+
+/* Navi */
+.naviContainer {
+    text-align: center;
+    border-bottom: #d3d3d3 solid 1px;
+    height: 23px;
+    background-color: #f9f8f6;
+}
+.naviContainerDiv {
+    display: inline-block;
+    width: 900px;
+}
+
+.navi {
+    display: block;
+}
+.navi li {
+    display: inline-block;
+    float: left;
+    list-style: none;
+    width: 150px;
+}
+.navi li a{
+    font-family: verdana;
+    display: inline-block;
+    color: black;
+    text-decoration: none;
+    font-size: 0.8em;
+}
+.navi li a:hover{
+    text-decoration: underline;
+}

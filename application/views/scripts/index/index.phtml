@@ -1,0 +1,36 @@
+<?php
+$arrays = $this->products;
+?>
+
+<ul class="indexContentUl">
+
+    <?php
+    /*     * ***************************************************
+     * @Do: Display items
+     * **************************************************** */
+    $cssClasses = array(
+        "main" => "indexProductsDiv",
+        "title" => "indexProductTitle", 
+        "img" => "indexProductImg"
+    );
+    $htmlTarget = array(
+        "new" => "_new"
+    );
+    foreach ($arrays as $product) {
+        echo "<li>";
+        echo "<div class={$cssClasses['main']}>";
+        // display item name & link
+        $url = $this->url(array("controller" => "product", "action" => "index")) . "?id=" . $product['pid'];
+        echo "<div><a class={$cssClasses['title']} target={$htmlTarget["new"]} href={$url}>{$product['pname']}</a></div>";
+        // Display Image
+        $imgUrl = ROOT_URI . "/images/products/" . $product['image'];
+        echo "<div><img class={$cssClasses['img']} src={$imgUrl}></div>";
+        // TODO display other details here
+        echo "</div>";
+        echo "</li>";
+    }
+    echo "</ul>";
+    echo "</td>";
+    ?>
+
+</ul>

@@ -1,0 +1,111 @@
+<!-- logo -->
+<div class="logo"><span>IKNOWU</span><span style="font-size:0.8em;">.com</span></div>
+
+<!-- Personal mailbox, avatar, notification -->
+<ul class="personalStuffUl">
+    <li>
+        <a id="myCart" class="headerMiniIconA">
+            <!--img id="headerShoppingCartIconImg" class="headerIconImg" src="<?= ROOT_URI . "/images/mslc/shoppingCart.jpg" ?>"-->
+            <div class="headerMiniIconText">My cart (<span id="headerShoppingCartLink"><?= Zend_Registry::get("jcart")->get_item_count() ?></span>)</div>
+        </a>
+        <div id="myCartPopup" class="myCartPopup profileControlDropdownMenu">
+            <div id="jcart"><?php Zend_Registry::get("jcart")->display_cart(); ?></div>
+        </div>
+    </li>
+    <?php if (!$this->isLoggedin): ?>
+        <!-- Login Form -->
+        <li>
+            <a class="headerMiniIconA signinLink" id="signinLink">
+                <div class="headerMiniIconText">Sign in</div>
+            </a>
+        </li>
+        <img id="headerAvatar" class="avatar" src="<?= ROOT_URI . "/images/avatars/default.jpg" ?>" alt = "Avatar" />
+        <div id="signinForm">
+            <form action="/singin" method="post" name="signinF" id="signinF">
+                <img src="<?= ROOT_URI . "/images/mslc/facebookLogin.jpg" ?>" onclick="Facebook_login()" style="cursor: pointer">
+                <hr>
+                <p>Or Sign In With Your iKnowU Account </p>
+                <table class="signinTable">
+                    <tr>
+                        <td><label for="signinEmail">Email:</label></td>
+                        <td>
+                            <input name="signinEmail" id="signinEmail" type="email" class="simpleBoxTextInput" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <label for="signinEmail" generated="true" class="validation_err_msg error"></label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label for="signinPassword">Password:</label></td>
+                        <td>
+                            <input name="signinPassword" class="simpleBoxTextInput" id="signinPassword" type="password" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <label for="signinPassword" generated="true" class="validation_err_msg error"></label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <a href="<?= $this->url(array("controller"=>"reg", "action"=>"forgotpassword")) ?>" class="forgotPassword">Forgot your password?</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <p id="signinLog"></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <button id="signinButton" type="button" class="simpleBoxButton">Sign in</button>
+                            <a href="<?= $this->url(array("controller" => "reg", "action" => "index")); ?>" class="register">Need an account?</a>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+        <!-- End of Login Form -->
+    <?php else: ?>
+        <!-- Member profile -->
+        <?php
+        $users = $this->uInfo;
+        $user = $users[0];
+        ?>
+
+        <!-- dropdown content here -->
+        <!-- message link & icon -->
+        <li>
+            <a class="headerMiniIconA">
+                <!--img id="headerMessageIconImg" class="headerIconImg" src="<?= ROOT_URI . "/images/mslc/message.jpg" ?>"-->
+                <div class="headerMiniIconText">Message (0)</div>
+            </a>
+        </li>
+        <li class="profileControlDropdownLi">
+                <a class="headerMiniIconA" href="<?= $this->url(array("controller" => "profile", "action" => "index")); ?>" id="profileControlDropdown" class="headerMiniIconA" style="position: relative">
+                    <div class="headerMiniIconText"><?= $user['nickname'] ?> &#x25BC;</div>
+                </a>
+                <!-- dropdown menu here -->
+                <div class="profileControlDropdownMenu">
+                    <ul class="dropdownList">
+                        <li><a class="headerProfileNavi_a" href="<?= $this->url(array("controller" => "profile", "action" => "edit")); ?>">Profile Setting</a></li>
+                        <li><a class="headerProfileNavi_a" href="<?= $this->url(array("controller" => "report", "action" => "index")); ?>">My Reports</a></li>
+                        <li id="signoutLink"><a class="headerProfileNavi_a">Sign out</a></li>
+                    </ul>
+                </div>
+        </li>
+        <!-- user avatar -->
+        <?php if (stristr($user["img"], ".")): ?>
+            <img id="headerAvatar" class="avatar" src="<?= ROOT_URI . "/images/avatars/" . $user["img"] ?>" alt = "Avatar" />
+        <?php else: ?>
+            <img id="headerAvatar" class="avatar" src="<?= "https://graph.facebook.com/" . $user["img"] . "/picture" ?>" alt = "Avatar" />
+        <?php endif; ?>
+        <!-- end of user avatar -->
+    <?php endif; ?>
+    <!-- End of Member profile -->
+</ul>

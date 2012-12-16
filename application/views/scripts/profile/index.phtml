@@ -1,0 +1,102 @@
+<?php
+if (isset($this->error)) {
+    // error occurred, so no user info is desplayer instead of error message.
+    echo "{$this->error}";
+} else {
+    //  display the user here.
+    $user = $this->user;
+    $user["img"] = ROOT_URI . "/images/avatars/{$user["img"]}";
+    $user["date"] = date_format(date_create($user["date"]), 'd-F-Y');
+    switch ($user["gender"]) {
+        case "M":
+            $user["gender"] = "Male";
+            break;
+        case "F":
+            $user["gender"] = "Female";
+            break;
+        default:
+            $user["gender"] = "Unspecify";
+    }
+}
+?>
+<div class="simpleBox">
+    <ul class="simpleBoxLi">
+        <?php
+        if (isset($this->isBanned)):
+            if ($user["reason"] == "") {
+                $user["reason"] = "Unspecified.";
+            }
+            // this user is banned
+            ?>
+            <li>
+                <h3>This user is banned.</h3>
+                <p>Reason: <?= $user["reason"] ?></p>
+            </li>
+            <?php
+        endif;
+        ?>
+        <li>
+            <table>
+                <tr>
+                    <td>
+                        <img class="prodileIndexAvatar" src="<?= $user["img"] ?>"/>
+                    </td>
+                    <td>
+                        <div><?= $user["nickname"] ?></div>
+                        <div><?= $user["gender"] ?></div>
+                        <div>Joined since <?= $user["date"] ?></div>
+                    </td>
+                </tr>
+            </table>
+        </li>
+        <?php
+        if (isset($this->isMe)):
+            // this id is belongs to the user himself
+            ?>
+            <li>
+                <table>
+                    <tr>
+                        <td>Email</td>
+                        <td><?= $user["email"] ?></td>
+                    </tr>
+                    <tr>
+                        <td>Name</td>
+                        <td><?= $user["name"] ?></td>
+                    </tr>
+                    <tr>
+                        <td>Address</td>
+                        <td><?= $user["address"] ?></td>
+                    </tr>
+                </table>
+            </li>
+            <?php
+        endif;
+        ?>
+        <li>
+            <div>Product Uploaded (<?= $this->productNum ?>)</div>
+            <?php
+            if ($this->productNum > 0) {
+                echo "<ul class='profileIndexProductUploadUl'>";
+                foreach ($this->products as $product) {
+                    ?>
+                <li>
+                    <table>
+                        <tr>
+                            <td rowspan="2"><img class="profileIndexProductUploadImg" src="<?= ROOT_URI . "/images/products/{$product["image"]}" ?>"/></td>
+                            <td><a href="<?= $this->url(array("controller" => "product", "action" => "index")) . "?id={$product["pid"]}" ?>"><?= $product["pname"] ?></a></td>
+                        </tr>
+                        <tr>
+                            <td>Date Uploaded: <?php echo date_format(date_create($product["date"]), 'd-F-Y'); ?></td>
+                        </tr>
+                    </table>
+                </li>
+                <?php
+            }
+            echo "</ul>";
+        } else {
+            echo "<p>No product uploaded by this user.</p>";
+        }
+        ?>
+        </li>
+    </ul>
+</div>

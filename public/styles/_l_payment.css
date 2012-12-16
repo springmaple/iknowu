@@ -1,0 +1,10 @@
+/*
+* Controller: payment
+* Action: index
+*
+*/
+.readonlyInput {
+    outline: none;
+    border: none;
+    background: transparent;
+}

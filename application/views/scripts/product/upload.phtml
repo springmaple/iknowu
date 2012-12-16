@@ -1,0 +1,175 @@
+<form id="productUploadForm" name="productUploadForm" method="post" action="confirmupload" enctype="multipart/form-data">    
+
+    <div class="simpleBox productUploadSimpleBox">
+        <h3>Sell a product</h3>
+        <p>Please specify the details of the product you want to sell.</p>
+        <hr>
+        <table class="productUploadTable">
+            <tr>
+                <td>
+                    <label for="productUploadName">Product Name:</label>
+                </td>
+                <td>
+                    <input id="productUploadName" name="productUploadName" class="simpleBoxTextInput productUploadNameTextInput">
+                    <label for="productUploadName" class="validation_err_msg error" generated="true"></label>
+                </td>
+                <td>
+                    <img class="profileEditQuestionMark" src="<?= ROOT_URI . "/images/mslc/questionMark.jpg" ?>">
+                    <span class="simpleBoxTooltip">The name of your product, keep it simple and attractive.</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="productUploadPrice">Offer Price:</label>
+                </td>
+                <td>
+                    <input id="productUploadPrice" name="productUploadPrice" class="simpleBoxTextInput productUploadNameTextInput">
+                    <label for="productUploadPrice" class="validation_err_msg error" generated="true"></label>
+                </td>
+                <td>
+                    <img class="profileEditQuestionMark" src="<?= ROOT_URI . "/images/mslc/questionMark.jpg" ?>">
+                    <span class="simpleBoxTooltip">Your offer price for this product.</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="productUploadImages">Images:</label>
+                </td>
+                <td>
+                    <div><input type="file" id="productUploadImages" name="productUploadImages[]" multifile_maxsize="1048576" multifile_accept="gif|jpg|png|jpeg" multifile_maxlength="3" class="multi"></div>
+                </td>
+                <td>
+                    <img class="profileEditQuestionMark" src="<?= ROOT_URI . "/images/mslc/questionMark.jpg" ?>">
+                    <span class="simpleBoxTooltip">Upload up to a maximum of 3 images of your product.</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="productUploadSize">Size:</label>
+                </td>
+                <td>
+                    <ul id="productUploadSizeUlToAdd" class="productUploadSizeUlToAdd"></ul>
+                    <div id="productUploadAddSize" class="productUploadAddButton">
+                        + 
+                        <ul class="productUploadSizeUl" id="productUploadSizeUl">
+                            <!-- The options for sizes [dropdown]  -->
+                            <?php
+                            foreach ($this->sizes->toArray() as $value):
+                                ?>
+                                <li class="productUploadSizesList">
+                                    <?= $value["indicator"] ?>
+                                </li>
+                                <?php
+                            endforeach;
+                            ?>
+                        </ul>
+                    </div>
+                    <div>
+                        <label for="productUploadAddSize" id="productUploadAddSizeError" class="validation_err_msg error" generated="true"></label>
+                    </div>
+                </td>
+                <td>
+                    <img class="profileEditQuestionMark" src="<?= ROOT_URI . "/images/mslc/questionMark.jpg" ?>">
+                    <span class="simpleBoxTooltip">Specify the quantity of your product for each size, leave it zero if don't have one.</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="productUploadCategory">Category:</label>
+                </td>
+                <td>
+                    <div>
+                        <select id="productUploadMainCategorySelect" name="productUploadMainCategorySelect" class="productUploadDropdown">
+                            <option value="" selected="selected"></option>
+                            <?php
+                            // code to generate all options for category
+                            $cats = $this->maincat;
+                            foreach ($cats as $value) {
+                                ?>
+                                <option value="<?= $value['maincat'] ?>"><?= $value['maincat'] ?></option>
+                                <?php
+                            }
+                            ?>
+                        </select>
+                        <select id="productUploadSubCategorySelect" name="productUploadSubCategorySelect" class="productUploadDropdown">
+                            <option value="" selected="selected"></option>
+                        </select>
+                        <select id="productUploadSubSubCategorySelect" name="productUploadSubSubCategorySelect" class="productUploadDropdown">
+                            <option value="" selected="selected"></option>
+                        </select>
+                    </div>
+                    <label id="productUploadCategoryError" class="validation_err_msg"></label>
+                </td>
+                <td>
+                    <img class="profileEditQuestionMark" src="<?= ROOT_URI . "/images/mslc/questionMark.jpg" ?>">
+                    <span class="simpleBoxTooltip">Please specify the category of your product.</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="productUploadGenderSelect">Gender of users:</label>
+                </td>
+                <td>
+                    <div>
+                        <select id="productUploadGenderSelect" name="productUploadGenderSelect" class="productUploadDropdown">
+                            <option value="" selected="selected"></option>
+                            <option value="any">Both</option>
+                            <option value="male">Male only</option>
+                            <option value="female">Female only</option>
+                        </select>
+                    </div>
+                    <label for="productUploadGenderSelect" class="validation_err_msg error" generated="true"></label>
+                </td>
+                <td>
+                    <img class="profileEditQuestionMark" src="<?= ROOT_URI . "/images/mslc/questionMark.jpg" ?>">
+                    <span class="simpleBoxTooltip">Who is more suitable to use your products?</span>
+                </td>
+            </tr>
+
+        </table>
+        <p>Help the consumers to understand your product more. (You can choose to skip the following parts)</p>
+        <hr>
+        <table class="productUploadTable">
+            <tr>
+                <td>
+                    <label for="productUploadDesc">Description:</label>
+                </td>
+                <td>
+                    <textarea id="productUploadDesc" name="productUploadDesc" class="simpleBoxTextArea productUploadTextArea"></textarea>
+                    <label for="productUploadDesc" class="validation_err_msg error" generated="true"></label>
+                </td>
+                <td>
+                    <img class="profileEditQuestionMark" src="<?= ROOT_URI . "/images/mslc/questionMark.jpg" ?>">
+                    <span class="simpleBoxTooltip">Describe your product within 200 words.</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="productUploadBrand">Brand:</label>
+                </td>
+                <td>
+                    <input id="productUploadBrand" name="productUploadBrand" class="simpleBoxTextInput productUploadNameTextInput">      
+                </td>
+                <td>
+                    <img class="profileEditQuestionMark" src="<?= ROOT_URI . "/images/mslc/questionMark.jpg" ?>">
+                    <span class="simpleBoxTooltip">Please specify the brand of your product. Leave it blank if you don't have one.</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="productUploadColor">Color:</label>
+                </td>
+                <td>
+                    <input type="color" class="colorPickInput" id="colorPickInput">
+                </td>
+                <td>
+                    <img class="profileEditQuestionMark" src="<?= ROOT_URI . "/images/mslc/questionMark.jpg" ?>">
+                    <span class="simpleBoxTooltip">Please specify the colors of your product.</span>
+                </td>
+            </tr>
+        </table>
+        <p>Click the NEXT button to proceed when you are done.</p>
+        <hr>
+        <span id="productUploadNextButton" name="productUploadNextButton" class="simpleBoxButton">Next</span>
+    </div>
+</form>

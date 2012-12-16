@@ -1,0 +1,138 @@
+/*
+*   controller: profile
+*   action: index
+*/
+.prodileIndexAvatar {
+    width: 200px;
+    height: 200px;
+}
+.profileIndexProductUploadUl {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.profileIndexProductUploadUl li {
+    border: none;
+}
+.profileIndexProductUploadImg {
+    width: 50px;
+    height: 50px;
+}
+
+/* 
+* 
+* action: edit 
+*/
+.profileEditTable {
+    border: none;
+    border-spacing: 50px 0;
+}
+.profileEditTable tr td {
+    vertical-align: top;
+    text-align: left;
+}
+.profileEditTable tr td div {
+    width: 100%;
+    padding: 20px;
+}
+.profileEditTable2 tr td:first-child {
+    width: 200px;
+}
+.profileEditTable2 tr td {
+    font-size: 1.3em;
+}
+.profileEditTable2 {
+    border-spacing: 0 20px;
+}
+.profileEditSettingBox {
+    margin-bottom: 20px;
+}
+.profileEditAvatarUploadInput { 
+    width: 1px; 
+    height: 1px;
+}
+.profileEditAvatarImg {
+    width: 220px;
+    height: 220px;
+    padding: 15px;
+    cursor: pointer;
+}
+.deactivateAccountWarningMarkImg {
+    width: 80px;
+    height: 80px;
+    border: none;
+    margin-left: 30px;
+    margin-right: 60px;
+    margin-bottom: 30px;
+}
+
+/*
+*   controller: profile
+*   action: editpassword
+*/
+.profileEditPasswordTable {
+    margin: 50px;
+}
+.profileEditPasswordTable tr td:first-child {
+    width: 200px;
+}
+
+/*
+* Commonly used 
+*/
+.profileEditTextInput {
+    display: block;
+    border-radius: 5px;
+    height: 20px;
+    width: 300px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    font-size: 0.8em;
+    border:1px solid #d3d3d3;
+}
+.profileEditTextInput:hover {
+    border: 1px solid #aaa;
+}
+.profileEditTextArea {
+    display: block;
+    border-radius: 5px;
+    resize: none;
+    width: 300px;
+    height: 150px;
+    padding: 10px;
+    font-size: 0.8em;
+    border:1px solid #d3d3d3;
+}
+.profileEditTextArea:hover {
+     border: 1px solid #aaa;
+}
+.genderRadioSet {
+    font-size: 0.8em;
+}
+.profileEditChangePassword {
+    display: inline-block;
+    margin: 0;
+    padding: 3px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    background-color: white;
+    color: black;
+    cursor: pointer;
+    font-size: 0.7em;
+    padding: 5px 10px 5px 10px;
+}
+.profileEditChangePassword:hover {
+    color: black;
+    border: 2px solid #aaa;
+}
+.profileEditQuestionMark {
+    margin-left: 20px;
+    width: 25px;
+    height: 25px;
+    cursor: help;
+}
+.profileEditQuestionMarkTooltip{
+    display: none;
+}

@@ -1,0 +1,14 @@
+.reg_form {
+    padding: 50px;
+    width: 500px;
+}
+.regTable {
+    border-spacing: 20px;
+    border: none;
+}
+.regTable tr td:first-child {
+    width: 300px;
+}
+.regTable tr td input {
+    width: 200px;
+}

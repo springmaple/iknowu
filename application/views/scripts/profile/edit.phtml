@@ -1,0 +1,143 @@
+<?php
+$user = $this->user[0];
+?>
+
+<table class="profileEditTable">
+    <tr>
+        <!-- Avatar -->
+        <td rowspan="2">
+            <form action="<?= ROOT_URI . "/ajax/profileavatarupload?format=json" ?>" method="post" name="profileEditForm" id="profileEditForm" enctype="multipart/form-data" >
+                <?php if (stristr($user["img"], ".")): ?>
+                    <img id="profileEditAvatarImg" class="profileEditAvatarImg simpleBox" src="<?= ROOT_URI . "/images/avatars/" . $user["img"] ?>" alt = "Avatar" />
+                <?php else: ?>
+                    <img id="profileEditAvatarImg"  class="profileEditAvatarImg simpleBox" src="<?= "https://graph.facebook.com/" . $user["img"] . "/picture" ?>" alt = "Avatar" />
+                <?php endif; ?>
+                <span class="simpleBoxTooltip" >Click to Change Avatar</span>
+                <input type="file" id="profileEditAvatarUploadInput" class="profileEditAvatarUploadInput" name="profileEditAvatarUploadInput">
+                <!-- input name="avatarUploadInput" id="avatarUploadInput" type="file" class="avatarUploadInput" -->
+                <br>
+                <label for="profileEditAvatarUploadInput" class="validation_err_msg error" generated="true"></label>
+            </form>
+        </td>
+    </tr>
+    <tr>
+        <td style="width: 75%">
+            <!-- Public Information -->
+            <div class="simpleBox profileEditSettingBox">
+                <h3>Public Information</h3>
+                <hr>
+                <table class="profileEditTable2">
+                    <tr>
+                        <td>Nickname:</td>
+                        <td><input name="nickname" class="profileEditTextInput" type="text" value="<?= $user["nickname"] ?>" /></td>
+                        <td>
+                            <img class="profileEditQuestionMark" src="<?= ROOT_URI . "/images/mslc/questionMark.jpg" ?>">
+                            <span class="simpleBoxTooltip">Nickname is the name you display to public.</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Gender:</td>
+                        <td>
+                            <span id="genderRadioSet" class="genderRadioSet">
+                                <input type="radio" id="radio1" value="M" name="gender" <?= $user["gender"] == "M" ? "checked='checked'" : ""; ?> /><label for="radio1">Male</label>
+                                <input type="radio" id="radio2" value="F" name="gender" <?= $user["gender"] == "F" ? "checked='checked'" : ""; ?> /><label for="radio2">Female</label>
+                                <input type="radio" id="radio3" value="" name="gender" <?= $user["gender"] == "" ? "checked='checked'" : ""; ?> /><label for="radio3">Unspecify</label>
+                            </span>
+                        </td>
+                        <td>
+                            <img class="profileEditQuestionMark" src="<?= ROOT_URI . "/images/mslc/questionMark.jpg" ?>">
+                            <span class="simpleBoxTooltip">Your gender will be shown to public.</span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <!-- Private Information -->
+            <div class="simpleBox profileEditSettingBox">
+                <h3>Non-public Information</h3>
+                <hr>
+                <table class="profileEditTable2">
+                    <tr>
+                        <td>Email:</td>
+                        <td><?= $user['email'] ?></td>
+                        <td><img class="profileEditQuestionMark" src="<?= ROOT_URI . "/images/mslc/questionMark.jpg" ?>">
+                            <span class="simpleBoxTooltip">Email cannot be changed.</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Password:</td>
+                        <td><a id="profileEditChangePassword" class="profileEditChangePassword">Change Password</a></td>
+                        <td>
+                            <img class="profileEditQuestionMark" src="<?= ROOT_URI . "/images/mslc/questionMark.jpg" ?>">
+                            <span class="simpleBoxTooltip">Change your current password.</span>
+                        </td>
+                    </tr>
+                    <td>Name:</td>
+                    <td><input name="name" class="profileEditTextInput" type="text" value="<?= $user["name"] ?>" /></td>
+                    <td>
+                        <img class="profileEditQuestionMark" src="<?= ROOT_URI . "/images/mslc/questionMark.jpg" ?>">
+                        <span class="simpleBoxTooltip">Public will not see your real name.</span>
+                    </td>
+                    <tr>
+                        <td>Address: </td>
+                        <td><textarea name="address" class="profileEditTextArea"><?= $user["address"] ?></textarea></td>
+                        <td>
+                            <img class="profileEditQuestionMark" src="<?= ROOT_URI . "/images/mslc/questionMark.jpg" ?>">
+                            <span class="simpleBoxTooltip">This is your shipping address.</span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div id="profileEditDeactivateDiv" class="simpleBox profileEditSettingBox">
+                <table>
+                    <tr>
+                        <td>
+                            <img src="<?= ROOT_URI . "/images/mslc/warningMark.jpg" ?>" class="deactivateAccountWarningMarkImg">
+                        </td>
+                        <td>
+                            <p style="color: red; font-weight: bold">Are you sure want to deactivate your profile?</p>
+                            <p style="color: red">You will not be able to undo this action upon deactivating.</p>
+                        </td>
+                    </tr>
+                </table>
+                <a id="profileEditDeactivateButtonCancel" class="simpleBoxButton" style="margin: 5px 10px 5px 10px;"">Cancel</a>
+                <a id="profileEditDeactivateButtonOk" class="simpleBoxLink" href='<?= $this->url(array("controller" => "profile", "action" => "deactivate")) . "?key=" . md5($user['uid']); ?>'>Yes, I want to deactivate my account</a>
+            </div>
+
+            <!-- Buttons -->
+            <a id="profileEditSaveButton" class="simpleBoxButton" >Save Changes</a>
+            <a id="profileEditDeactivateButton" class="simpleBoxButton" >Deactivate Account</a>
+        </td>
+    </tr>
+</table>
+
+<!-- dialog for 1st time registered -->
+<div id="firstTimeRegistered" title="Hi <?= $user['nickname'] ?>">
+    <p>
+        Do you want to go to your profile setting now?
+    </p>
+    <a id="firstTimeRegisteredYes" class="simpleBoxButton" style="margin: 5px 10px 5px 10px;color: white;">Yeah!</a>
+    <a href="<?= $this->url(array("controller" => "index", "action" => "index")); ?>" target="_self" id="firstTimeRegisteredNo">
+        Skip &#187;</a>
+</div>
+<script>
+    var autoOpenFirstTimeRegisteredDialog = false;
+</script>
+<?php
+if ($this->alert == "passwordChanged") :
+    // *********** password changed display alert
+    ?>
+    <script>
+        iknowu_alert('New password has been saved.');
+    </script>
+    <?php
+elseif ($this->alert == "registration"):
+    //*************** first time register
+    ?>
+    <script>
+        var autoOpenFirstTimeRegisteredDialog = true;
+    </script>
+    <?php
+endif;
+?>
+
+

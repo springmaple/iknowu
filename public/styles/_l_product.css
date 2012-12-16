@@ -1,0 +1,306 @@
+/* 
+*   controller: product
+*   action: index
+*/
+.productIndexContainerDiv {
+
+}
+.productIndexTable {
+    border: none;
+    border-spacing: 20px;
+}
+.productIndexTable tr td {
+    vertical-align: top;
+}
+.productIndexImagesDiv{
+    padding: 15px;
+    border: 1px solid #d3d3d3;
+    background-color: white;
+}
+.slides_container {
+    width:200px;
+    height:200px;
+}
+.slides_container div {
+    width:570px;
+    height:270px;
+    display:block;
+}
+.productIndexSlidesImg {
+    width:200px;
+    height:200px;
+    border: 1px solid #e6e6e6;
+}
+.productIndexMagnifyImg {
+    position: absolute;
+    bottom: 0;
+    z-index: 200;
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+}
+#productIndexMagnifyContentImg img {
+    width: 500px;
+    height: 500px;
+}
+.productIndexNameDiv {
+    font-weight: 700;
+    font-size: 1.0em;
+    margin: 0 0 10px 0;
+    padding: 0;
+}
+.productIndexDescriptionDiv {
+    min-height: 150px;
+}
+.productIndexPriceImg {
+    width: 25px;
+    height: 25px;
+    margin: 0 10px 0 0;
+    cursor: help;
+}
+.productIndexPriceText {
+    font-weight: bold;
+}
+.productUploadNameTd {
+    width: 700px;
+}
+.productIndexSizeDiv {
+    padding: 15px;
+}
+.addToCartButton {
+    background-color: white;
+    cursor: pointer;
+    border: #d3d3d3 solid 1px;
+    padding: 5px;
+    border-radius: 5px;
+}
+.addToCartButton:hover {
+    border-color: #666;
+}
+/* comment part*/
+.productIndexCommentDiv {
+    margin-top: 30px;
+}
+.productIndexCommentDiv2 {
+    padding: 0 20px 0 20px;
+}
+.productIndexCommentImg {
+    height: 20px;
+    width: 20px;
+}
+.productIndexCommentText {
+    color: #ccc;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+.productIndexWriteCommentDiv {
+    background-color: #e6e6e6;
+    border: none;
+    padding: 15px;
+}
+.productIndexWriteCommentTextarea {
+    display: block;
+    resize: none;
+    width: 98%;
+    min-height: 20px;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+.productIndexWriteCommentTextAreaBlur {
+    color: #ccc;
+    font-style: italic;
+}
+.productIndexWriteCommentCharRemaining {
+    display: inline-block;
+    margin-left: 10px;
+    color: black;
+    font-size: 0.7em;
+}
+.productIndexCommentUl {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.productIndexCommentUl li {
+    padding: 10px 20px 10px 20px;
+    border-bottom: #d3d3d3 solid thin;
+    position: relative;
+}
+.productIndexCommentUl li:hover {
+    cursor: default;
+}
+.productIndexCommentTable tr td{
+    vertical-align: top;
+}
+.productIndexCommentUserImg {
+    width: 40px;
+    height: 40px;
+    margin: 0 20px 0 0;
+}
+.productIndexCommentNickname {
+    font-size: 1em;
+}
+.productIndexCommentDate {
+    color: #666;
+    font-size: 0.6em;
+}
+.productIndexCommentDeleteA {
+    position: absolute;
+    top: 5px;
+    right: 40px;
+    cursor: pointer;
+    display: inline-block;
+    padding: 5px 8px 5px 8px;
+    border: #d3d3d3 solid 1px;
+    text-align: center;
+    vertical-align: middle;
+}
+.productIndexCommentDeleteA:hover {
+    color: black;
+    background-color: #d3d3d3;
+}
+
+/*
+*   controller: product
+*   action: upload
+*/
+.productUploadSimpleBox {
+    display: inline-block;
+    padding: 30px;    
+}
+.productUploadTable {
+    border-spacing: 20px;
+}
+.productUploadTable tr td {
+    vertical-align: top;
+}
+.productUploadTable tr td:first-child {
+    width: 150px;
+}
+.productUploadNameTextInput {
+    width: 500px;
+}
+.productUploadTableSize {
+    border-spacing: 0;
+}
+.productUploadAddButton {
+    position: relative;
+    display: inline-block;
+    border: none;
+    border-radius: 5px;
+    background-color: #ccc;
+    cursor: pointer;
+    font-weight: 900;
+    font-size: 2em;
+    padding: 0 10px 0 10px;
+    color: white;
+}
+.productUploadSizeUl {
+    display: inline-block;
+    top: 0;
+    left: 40px;
+    position: absolute;
+    border: 1px solid #d3d3d3;
+    background-color: white;
+    list-style: none;
+    margin: 0;
+    color: black;
+    font-size: 0.4em;
+    font-weight: normal;
+    padding: 0;
+}
+.productUploadSizeUl li {
+    padding: 5px 20px 5px 20px;
+    margin: 0;
+    width: 100px;
+}
+.productUploadSizeUl li:hover {
+    background-color: #d3d3d3;
+}
+.productUploadSizeUlToAdd {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.productUploadAddButton:hover {
+    background-color: #e6e6e6;
+}
+.profileUploadSpinner{
+    width: 35px;
+    height: 18px;
+    font-size: 0.8em;
+}
+.productUploadSizeLabel {
+    display: inline-block;
+    width: 80px;
+}
+.productUploadSizeDiv {
+    display: block;
+    margin-bottom: 10px;
+}
+.productUploadHiddenTextInput {
+    border: none;
+    width: 100%;
+    margin: 0;
+}
+.productUploadTextArea {
+    display: block;
+    resize: none;
+    width: 515px;
+    border-radius: 5px;
+    border: 1px solid #d3d3d3;
+    min-height: 100px;
+}
+.productUploadDropdown {
+    border: 1px solid #d3d3d3;
+    border-radius: 5px;
+    min-width: 150px;
+    height: 25px;
+}
+.colorPickImg {
+    cursor: pointer;
+}
+.productUploadColor {
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    padding: 2px;
+    background-color: white;
+    border: 1px solid #d3d3d3;
+    margin: 0 10px 0 10px;
+    cursor: not-allowed;
+}
+.colorPickImg {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+}
+
+/*
+*   controller: product
+*   action: confirmUpload
+*/
+.confirmUploadContainerDiv {
+    width: 1000px;
+}
+.confirmUploadConsentDiv {
+    border: 1px solid #d3d3d3;
+    padding: 25px 25px 35px 25px;
+    box-shadow: #d3d3d3 0 0 8px;
+    margin: 0 0 20px 0;
+}
+.previewTextContainer {
+    position: relative;
+}
+.previewTextDiv {
+    position: absolute;
+    -webkit-transform: rotate(-45deg); 
+    -moz-transform: rotate(-45deg);	
+    font-size: 6em;
+    color: red;
+    z-index: 200;
+    top: 100px;
+    left: -50px;
+}

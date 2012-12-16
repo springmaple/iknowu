@@ -1,0 +1,154 @@
+/*
+    transform: rotate(315deg);
+    -o-transform: rotate(315deg);
+    -khtml-transform: rotate(315deg);
+    -webkit-transform: rotate(315deg); 
+    -moz-transform: rotate(315deg);
+*/
+
+@font-face {
+    font-family: timeburner;
+    src: url('../../public/fonts/timeburner.ttf');
+}
+@font-face {
+    font-family: champagne;
+    src: url('../../public/fonts/champagne.ttf');
+}
+.simpleBox {
+    border: 1px solid #ccc;
+    background-color: white;
+}
+.simpleBoxLi {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.simpleBoxLi li {
+    display: block;
+    border: none;
+    margin: 0;
+    padding: 10px;
+    border-bottom: #ccc solid 1px;
+}
+.simpleBoxLi li:last-child {
+    border: none;
+}
+.simpleBoxLink {
+    color: blue;
+    cursor: pointer;
+    text-decoration: none;
+}
+.simpleBoxLink:hover {
+    color: blue;
+    text-decoration: underline;
+}
+.simpleBoxTable {
+    border: none;
+}
+.simpleBoxTable tr td{
+    vertical-align: top;
+}
+.simpleBoxButton {
+    font-family: verdana;
+    font-size: 0.9em;
+    display: inline-block;
+    margin: 0 0 0 0;
+    padding: 5px 10px 5px 10px;
+    min-width: 20px;
+    cursor: pointer;
+    border: none;
+    background-color: #666;
+    color: white;
+    cursor: pointer;
+    border-radius: 2px;
+}
+.simpleBoxButton:hover {
+    color: white;
+    background-color: #999;
+    border: none;
+}
+.simpleBoxTooltip {
+    display: none;
+    padding: 7px;
+    border: 3px solid #000;
+    border-radius: 3px;
+    background-color: black;
+    z-index: 300;
+    font-size: 0.6em;
+    margin-top: 15px;
+    color: white;
+}
+.simpleBoxTooltip:hover {
+    display: none;
+    visibility: hidden;
+}
+.validation_err_msg {
+    color: #cd0a0a;
+    font-size: 0.7em;
+}
+/* simpleBox form elements */
+.simpleBoxTextInput {
+    display: block;
+    border-radius: 5px;
+    height: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    font-size: 0.8em;
+    border:1px solid #d3d3d3;
+}
+.simpleBoxTextInput:hover {
+    border: 1px solid #aaa;
+}
+
+
+*:focus { outline: activeborder solid 1px; }
+a:link {
+    color: #0398CA;
+    text-decoration: none;
+}
+a:hover {
+    color: #cd0a0a;
+}
+
+root { 
+    display: block;
+}
+body {
+    margin: 0;
+    padding: 0;
+    font-family: verdana;
+    background-color: #aaa;
+    background-image: url("images/bg.jpg");
+    background-attachment: fixed;
+}
+
+
+.bodyContainer {
+    margin: auto;
+    padding: 0 30px 0 30px;
+}
+
+.content {
+    clear: left;
+    display: block;
+    font-family: sans-serif;
+    margin: 0;
+    padding-top: 50px;
+    text-align: center;
+}
+.articleContainerDiv {
+    display: inline-block;
+    width: fit-content;
+    text-align: left;
+}
+.footer {
+    display: block;
+    text-align: center;
+    padding-top: 50px;
+    margin: 0;
+}
+.copyright {
+    font-family: Times New Roman;
+}

@@ -1,0 +1,30 @@
+.indexContentUl {
+    display: inline;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.indexContentUl li {
+    display: inline-block;
+    float: left;
+    margin: 5px;
+}
+.indexProductsDiv {
+    display: block;
+    border: 1px solid #ccc;
+    width: 230px;
+    color: black;
+    background-color: white;
+    padding: 20px;
+    min-height: 20px;
+}
+.indexProductTitle {
+    text-decoration: none;
+    color: black;
+    font-weight: 900;
+    font-family: verdana;
+}
+.indexProductImg {
+    width: 100%;
+    height: 200px;
+}

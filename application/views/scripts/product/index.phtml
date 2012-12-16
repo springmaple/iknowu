@@ -1,0 +1,212 @@
+<?php
+if ($this->justComment || $this->justDeleteComment) {
+    if ($this->justComment)
+        $string = "Comment submitted successfully";
+    if ($this->justDeleteComment)
+        $string = "Comment deleted successfully";
+    ?>
+    <script>
+        iknowu_alert("<?= $string ?>");
+    </script>
+    <?php
+}
+?>
+
+<?php
+/*
+ * Purpose: get all variables from the controller first.
+ */
+$isAvailable = $this->isAvailable;
+$product = $this->product; // [pid, pname, desc, price, catid, bid(brand), forgender, uid]
+$images = $this->images; // [0, 1, 2]
+$sizes = $this->sizes; // Array ( [0] => Array ( [sizeid] => 2 [indicator] => XS [quantityleft] => 20 ) [1] => Array ( [sizeid] => 5 [indicator] => L [quantityleft] => 20 ) ) 
+$rate = $this->rate; // Array ( [0] => Array ( [numberrate] => 0 [totalrate] => ) )
+?>
+
+<input type="hidden" name="productIndexPid" id="productIndexPid" value="<?= $product['pid'] ?>">
+<!-- ------------------------------------------------ -->
+<!-- Product details go here ------------------------ -->
+<div class="productIndexContainerDiv">
+    <table class="productIndexTable">
+        <tr>
+            <td rowspan="2">
+                <!-- image previews -->
+                <div class="productIndexImagesDiv simpleBox">
+                    <div id="slides">
+                        <div class="slides_container">
+                            <?php
+                            if (!count($images)) {
+                                $images = array(array("img" => "default.jpg"));
+                            }
+                            foreach ($images as $image) {
+                                $img = $image['img'];
+                                echo "<div>";
+                                echo "<img title='Click to navigate' class='productIndexSlidesImg' src='" . ROOT_URI . "/images/products/$img'>";
+                                echo "</div>";
+                            }
+                            ?>
+                        </div>
+                        <span style="position: relative" rel="facebox[.productIndexFacebox]" id="productIndexMagnifyImg" href="<?= ROOT_URI . "/images/products/" . $images[0]['img'] ?>"><img src="<?= ROOT_URI . "/images/mslc/magnify.jpg" ?>" class="productIndexMagnifyImg" ></span>
+                    </div>
+
+                    <div class="productIndexRateTooltipRollover">
+                        <!-- Rating -->
+                        <span>
+                            <input type="hidden" value="<?= $product['pid'] ?>" id="productId">
+                            <input type="range" value="<?= $rate['myrate'] ?>" step="1" id="backing4">
+                            <div class="rateit" data-rateit-backingfld="#backing4" data-rateit-resetable="false"  data-rateit-ispreset="true"
+                                 data-rateit-min="0" data-rateit-max="5">
+                            </div>
+                        </span>
+                        <span>
+                            <?php
+                            if(!$rate['numberrate']) {
+                                // no rating
+                                echo "No rating";
+                            } else {
+                                $point = $rate['totalrate'] / $rate['numberrate'];
+                                echo  $point . " (". $rate['numberrate'] ." rates)";
+                            }
+                            ?>
+                        </span>
+                    </div>
+                    <div>
+
+                    </div>
+                </div>
+            </td>
+            <td  class="productUploadNameTd">
+                <!-- product previews -->
+                <div class="productIndexNameDiv">
+                    <?= $product['pname'] ?>
+                </div>
+            </td>
+            <td>
+                <img class="profileEditQuestionMark" src="<?= ROOT_URI . "/images/mslc/moreInfo.jpg" ?>">
+                <span class="simpleBoxTooltip">The offer price for this item is <?= $this->productUploadPrice ?></span>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div class="productIndexDescriptionDiv"><?= $product['desc'] ?></div>
+                <div>
+                    <img id="productIndexPriceImg" src =" <?= ROOT_URI . "/images/mslc/price.jpg" ?> " class="productIndexPriceImg">
+                    <span class="simpleBoxTooltip">The offer price for this item is <?= $product['formattedPrice'] ?></span>
+                    <span class="productIndexPriceText"><?= $product['formattedPrice'] ?></span>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <div class="simpleBox productIndexSizeDiv">
+        <!-- product availability -->
+        <h3>Available in:</h3>
+        <table>
+            <?php
+            // action body
+            // do loop to get sizes
+            foreach ($sizes as $size) {
+                ?>
+                <div>
+
+                    <tr><td>
+                            <?= $size['indicator'] ?>:
+                        </td>
+                        <td>
+                            <?= $size['quantityleft'] ?>
+                        </td>
+                        <td>
+                            <!-- jcart inputs -->
+                            <form method="post" action="" class="jcart">
+                                <input type="hidden" name="my-item-id" value="<?= $product['pid'] . '-' . $size['sizeid'] ?>" />
+                                <input type="hidden" name="my-item-name" value="<?= $product['pname'] . ' (' . $size['indicator'] . ')' ?>" />
+                                <input type="hidden" name="my-item-price" value="<?= $product['price'] ?>" />
+                                <input type="hidden" name="my-item-url" value="<?= get_tiny_url("http://localhost/iknowu/public/product?id=" . $product['pid']) ?>" />
+                                <input type="hidden" name="my-item-qty" value="1" />
+                                <button type="submit" name="my-add-button" class="addToCartButton">
+                                    <img src="<?= ROOT_URI . '/images/mslc/shoppingCart.jpg' ?>" alt="Save icon"/> Add to cart
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                </div> 
+                <?php
+            }
+            ?>
+        </table>
+    </div>
+</div>
+<!-- --------------------------------------------------------------------- -->
+<!-- Recommendation based on product type go here ------------------------ -->
+<div></div>
+<!-- ----------------------------------------- -->
+<!-- Comments go here ------------------------ -->
+<?php
+/*
+ * Purpose; get variables that related to comment from the controller
+ */
+$comments = $this->comments;
+?>
+<div class="productIndexCommentDiv">
+    <img class="productIndexCommentImg" src="<?= ROOT_URI . "/images/mslc/comment.jpg" ?>">
+    <span class="productIndexCommentText">Comment (<?= count($comments) ?>)</span>
+</div> 
+<hr>
+<div class="productIndexCommentDiv2">
+    <!-- all comments loop and display here -->
+    <!-- the format of comment list is li:table -->
+    <ul class="productIndexCommentUl">
+        <?php
+        foreach ($comments as $comment) {
+            ?>
+            <li class="productIndexCommentLi">
+                <table class="productIndexCommentTable">
+                    <tr>
+                        <td rowspan="3"><img class="productIndexCommentUserImg" src="<?= ROOT_URI . "/images/avatars/" . $comment['img'] ?>"></td>
+                        <td class="productIndexCommentNickname"><a href="#"><?= $comment['nickname'] ?></a> says</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <?php
+                            $contentArray = explode('>', $comment['content']);
+                            foreach ($contentArray as $content) {
+                                echo "<pre>";
+                                echo $content;
+                                echo "</pre>";
+                            }
+                            ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><span class="productIndexCommentDate" title="<?= date("c", strtotime($comment['date'])) ?>">Date</span></td>
+                    </tr>
+                </table>
+                <?php
+                if ($comment["uid"] == $this->uid) {
+                    $pid = $product['pid'];
+                    $date = $comment['date'];
+                    echo "<a class='productIndexCommentDeleteA' pid='$pid' date='$date'>✕</a>";
+                }
+                ?>
+            </li>
+            <?php
+        }
+        ?>
+    </ul>
+    <!-- insert new comment -->
+    <?php
+    if ($this->isAvailable && $this->isLoggedin) {
+        ?>
+        <div class="productIndexWriteCommentDiv">
+            <textarea name="productIndexWriteComment" id="productIndexWriteComment" class="productIndexWriteCommentTextarea productIndexWriteCommentTextAreaBlur">Write your comment here...</textarea>
+            <a id="productIndexWriteCommentSubmitButton" class="simpleBoxButton">Submit</a> <span class="productIndexWriteCommentCharRemaining">You have <span id="productIndexCommentCharRemaining">250</span> character(s) remaining.</span>
+        </div>
+        <?php
+    } else if ($this->isAvailable && !$this->isLoggedin) {
+        ?>
+        <div class="productIndexWriteCommentDiv">
+            Please sign in to comment.
+        </div>
+        <?php
+    }
+    ?>
+</div>

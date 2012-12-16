@@ -1,0 +1,55 @@
+<div class="simpleBox reg_form">
+    <h3>Register - Welcome To Our Family!</h3>
+    <hr>
+    <p>You can sign in directly with your facebook account</p>
+    <img src="<?= ROOT_URI . "/images/mslc/facebookLogin.jpg" ?>" onclick="Facebook_login()" style="cursor: pointer">
+    <div>
+        <h3>OR</h3>
+        <p>Sign up manually</p>
+        <form name="reg" action="" method="post">
+            <table class="regTable">
+                <tr>
+                    <td>
+                        Email: 
+                    </td>
+                    <td>
+                        <input type="text" name="regEmail" class="simpleBoxTextInput">
+                    </td>
+                    <td>
+                        <img class="profileEditQuestionMark" src="<?= ROOT_URI . "/images/mslc/questionMark.jpg" ?>">
+                        <span class="simpleBoxTooltip">Please enter your primary email address.</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Password:
+                    </td>
+                    <td>
+                        <input type="password" name="regPassword" class="simpleBoxTextInput">
+                    </td>
+                    <td>
+                        <img class="profileEditQuestionMark" src="<?= ROOT_URI . "/images/mslc/questionMark.jpg" ?>">
+                        <span class="simpleBoxTooltip">Choose your preferred sign in pass.</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Preferred Nick:
+                    </td>
+                    <td>
+                        <input type="text" name="regNick" class="simpleBoxTextInput">
+                    </td>
+                    <td>
+                        <img class="profileEditQuestionMark" src="<?= ROOT_URI . "/images/mslc/questionMark.jpg" ?>">
+                        <span class="simpleBoxTooltip">Choose a nickname to display to the public.</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td columnspan="3">
+                        <button class="simpleBoxButton" type="submit" name="submit">Submit</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>

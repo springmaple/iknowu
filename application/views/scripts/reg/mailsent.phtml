@@ -1,0 +1,13 @@
+<div class="simpleBox">
+    <ul class="simpleBoxLi">
+        <li>
+            <?php
+            if(!empty($this->error)) {
+                echo $this->error;
+            } else {
+                echo "An email with the instructions on how to change your password has been forwarded to <strong>{$this->email}</strong>.";
+            }
+            ?>
+        </li>
+    </ul>
+</div>

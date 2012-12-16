@@ -1,0 +1,15 @@
+.iknowu_alert {
+    display: inline-block;
+    position: fixed;
+    margin: 0;
+    padding: 10px 50px 10px 50px;
+    border: none;
+    background-color: black;
+    box-shadow: 0 0 8px #999;
+    z-index: 301;
+    color: white;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-family: verdana;
+    top: 0;
+}
