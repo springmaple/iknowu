@@ -44,3 +44,16 @@ function iknowu_alert(content, time, fade_time){
         });
     });
 }
+
+/*
+ *  Method signature:
+ *      delay(function(){
+ *      }, 100)
+ */
+var delay = (function(){
+    var timer = 0;
+    return function(callback, ms){
+        clearTimeout (timer);
+        timer = setTimeout(callback, ms);
+    };
+})();

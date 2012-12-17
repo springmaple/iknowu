@@ -1,4 +1,69 @@
 $(document).ready(function(){
+    // **** controller: profile
+    // ***** action: index
+    $("#profileIndexFollow").buttonset();
+    $("#profileIndexFollowInput").bind("change", function(){
+        if($(this).is(":checked")){
+            $("#profileIndexFollowLabel").html("&#10004; Followed");
+            $.ajax({
+                url: "http://www.iknowu.com/iknowu/public/ajax/follow?format=html",
+                dataType: "html",
+                data: {
+                    act: "follow",
+                    id: $("#profileIndexUid").val()
+                },
+                success: function(data){
+                    var fallback = true;
+                    if(data == "notLogin") {
+                        jAlert("Please sign in first.", "Not signed in");
+                    } else if(data == "notExist") {
+                        jAlert("The user is not exist.", "User not exist");
+                    } else if(data == "failed"){
+                        jAlert("Please try again later", "Internal server error");
+                    } else {
+                        fallback = false;
+                    }
+                    if(fallback) {
+                        window.location.reload();
+                    }
+                },
+                error: function(data) {
+                    jAlert("Please try again later", "Internal server error");
+                    window.location.reload();
+                }
+            });
+        } else {
+            $("#profileIndexFollowLabel").html("Follow");
+            $.ajax({
+                url: "http://www.iknowu.com/iknowu/public/ajax/follow?format=html",
+                dataType: "html",
+                data: {
+                    act: "unfollow",
+                    id: $("#profileIndexUid").val()
+                },
+                success: function(data){
+                    var fallback = true;
+                    if(data == "notLogin") {
+                        jAlert("Please sign in first.", "Not signed in");
+                    } else if(data == "notExist") {
+                        jAlert("The user is not exist.", "User not exist");
+                    } else if(data == "failed"){
+                        jAlert("Please try again later", "Internal server error");
+                    } else {
+                        fallback = false;
+                    }
+                    if(fallback) {
+                        window.location.reload();
+                    }
+                },
+                error: function(data, d, d1) {
+                    jAlert("Please try again later", "Internal server error");
+                    window.location.reload();
+                }
+            });
+        }
+    });
+
     $("#profileEditAvatarImg").tooltip({
         position: "bottom center"
     });

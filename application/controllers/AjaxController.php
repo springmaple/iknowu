@@ -1,16 +1,13 @@
 <?php
 
-class AjaxController extends Zend_Controller_Action
-{
+class AjaxController extends Zend_Controller_Action {
 
-    public function preDispatch()
-    {
+    public function preDispatch() {
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
     }
 
-    public function init()
-    {
+    public function init() {
         /* Initialize action controller here */
         $ajaxContext = $this->_helper->getHelper('AjaxContext');
         $ajaxContext
@@ -25,11 +22,12 @@ class AjaxController extends Zend_Controller_Action
                 ->addActionContext('getjcartconfig', 'json')
                 ->addActionContext('getjcart', 'html')
                 ->addActionContext('rate', 'html')
+                ->addActionContext('checkemail', 'html')
+                ->addActionContext('follow', 'html')
                 ->initContext();
     }
 
-    public function indexAction()
-    {
+    public function indexAction() {
 // action body
         /* code template
           $response = $this->getResponse();
@@ -38,8 +36,7 @@ class AjaxController extends Zend_Controller_Action
          */
     }
 
-    public function authAction()
-    {
+    public function authAction() {
 // action body       
         $email = $this->getParam("email");
         $password = $this->getParam("password");
@@ -65,16 +62,14 @@ class AjaxController extends Zend_Controller_Action
         }
     }
 
-    public function signoutAction()
-    {
+    public function signoutAction() {
 // action body
         $session = new Zend_Session_Namespace("auth");
         $session->unlock();
         Zend_Session::namespaceUnset("auth");
     }
 
-    public function fbauthAction()
-    {
+    public function fbauthAction() {
 // action body
         $session = new Zend_Session_Namespace("auth");
         $db = new Application_Model_DbTable_User();
@@ -129,8 +124,7 @@ class AjaxController extends Zend_Controller_Action
         }
     }
 
-    public function profileeditAction()
-    {
+    public function profileeditAction() {
         $session = new Zend_Session_Namespace("auth");
         $db = new Application_Model_DbTable_User();
 
@@ -146,8 +140,7 @@ class AjaxController extends Zend_Controller_Action
         $this->view->status = $success;
     }
 
-    public function profileavataruploadAction()
-    {
+    public function profileavataruploadAction() {
         // action body
         try {
             $db = new Application_Model_DbTable_User();
@@ -192,8 +185,7 @@ class AjaxController extends Zend_Controller_Action
         }
     }
 
-    public function getcategoryAction()
-    {
+    public function getcategoryAction() {
         // action body
         $mode = $this->_getParam("mode");
 
@@ -228,8 +220,7 @@ class AjaxController extends Zend_Controller_Action
         }
     }
 
-    public function getbrandAction()
-    {
+    public function getbrandAction() {
         // action body
         $term = $this->_getParam("term");
         $db = Zend_Db_Table::getDefaultAdapter();
@@ -249,8 +240,7 @@ class AjaxController extends Zend_Controller_Action
         return false;
     }
 
-    public function uploadcommentAction()
-    {
+    public function uploadcommentAction() {
         // action body
         $alertSession = new Zend_Session_Namespace("alert");
         $session = new Zend_Session_Namespace("auth");
@@ -267,8 +257,7 @@ class AjaxController extends Zend_Controller_Action
         }
     }
 
-    public function deletecommentAction()
-    {
+    public function deletecommentAction() {
         $alertSession = new Zend_Session_Namespace("alert");
         $session = new Zend_Session_Namespace("auth");
         $uid = $session->uid;
@@ -284,27 +273,24 @@ class AjaxController extends Zend_Controller_Action
         }
     }
 
-    public function getjcartconfigAction()
-    {
+    public function getjcartconfigAction() {
         $config = Zend_Registry::get("jcart_config");
         $this->view->response = $config;
     }
 
-    public function getjcartAction()
-    {
+    public function getjcartAction() {
         Zend_Registry::get("jcart")->display_cart();
     }
 
-    public function rateAction()
-    {
+    public function rateAction() {
         $rateDb = new Application_Model_DbTable_Rate();
-        
+
         /*
          * Purpose: check if user is logged in
          */
         $authSession = new Zend_Session_Namespace("auth");
         $uid = $authSession->uid;
-        if(empty($uid)) {
+        if (empty($uid)) {
             // this user is not logged in yet
             echo false;
         } else {
@@ -313,7 +299,7 @@ class AjaxController extends Zend_Controller_Action
                     ->where("uid = ?", $uid)
                     ->where("pid = ?", $this->_getParam("pid"));
             $result = $sql->query();
-            if($result->rowCount() < 1) {
+            if ($result->rowCount() < 1) {
                 // this user not rated before
                 $array = array("uid" => $uid, "pid" => $this->_getParam("pid"), "rate" => $this->_getParam("rate"), "date" => date("Y-m-d H:i:s"));
                 $rateDb->insert($array);
@@ -327,8 +313,56 @@ class AjaxController extends Zend_Controller_Action
         }
     }
 
+    public function checkemailAction() {
+        $userDb = new Application_Model_DbTable_User();
+        $email = $this->_getParam("email");
+
+        $query = $userDb->select()
+                ->from($userDb)
+                ->where("email = ?", $email);
+        $result = $query->query();
+        if ($result->rowCount() > 0) {
+            // The user with particular email already exists, invalid
+            echo "false";
+        } else {
+            // The user with particular email NOT exists, valid
+            echo "true";
+        }
+    }
+
+    public function followAction() {
+        $action = $this->_getParam("act");
+
+        $authSession = new Zend_Session_Namespace("auth");
+        $followeruid = $authSession->uid;
+        $followinguid = $this->_getParam("id");
+        $followDb = new Application_Model_DbTable_Follow();
+
+        if ($followeruid == "") {
+            echo "notLogin";
+            return;
+        }
+        if ($followinguid == "") {
+            echo "notExist";
+            return;
+        }
+
+        switch ($action) {
+            case "follow":
+                $data = array("followeruid" => $followeruid, "followinguid" => $followinguid, "date" => date("Y-m-d H:i:s"));
+                $result = $followDb->insert($data);
+                break;
+            case "unfollow":
+                $where = array("followeruid = ?" => $followeruid, "followinguid = ?" => $followinguid);
+                $result = $followDb->delete($where);
+                break;
+        }
+        if ($result) {
+            echo "success";
+            return;
+        }
+        echo "failed";
+    }
 
 }
-
-
 

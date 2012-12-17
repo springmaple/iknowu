@@ -1,0 +1,25 @@
+<?php
+$noFollow = $this->noFollow;
+$noUpdate = $this->noUpdate;
+?>
+<?php if ($noFollow): ?>
+ <p>You are not following anyone yet. Go to a seller's profile and click on the follow button to start receive updates from them.</p>
+ <?php elseif ($noUpdate): ?>
+ <p>You don't have any update at this moment, click into any seller's profile and start following them!</p>
+<?php else: ?>
+    <table class="updateIndexTable">
+        <tr>
+            <td class="updateIndexUserTd">
+                <ul class="updateIndexUserUl">
+                    <li><a class="simpleBoxLink">All Updates</a></li>
+                    <?php
+                    // ***** @Do: loop and get all updates
+                    ?>
+                </ul>
+            </td>
+            <td class="updateIndexContentTd">
+                <iframe id="updateIndexIframe" class="updateIndexIframe" src="<?= ROOT_DOMAIN . "/update/updateframe?id=0" ?>"></iframe>
+            </td>
+        </tr>
+    </table>
+<?php endif; ?>

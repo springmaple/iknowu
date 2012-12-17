@@ -1,4 +1,5 @@
 <?php
+$isFollowing = $this->isFollowing;
 if (isset($this->error)) {
     // error occurred, so no user info is desplayer instead of error message.
     echo "{$this->error}";
@@ -9,16 +10,17 @@ if (isset($this->error)) {
     $user["date"] = date_format(date_create($user["date"]), 'd-F-Y');
     switch ($user["gender"]) {
         case "M":
-            $user["gender"] = "Male";
+            $user["gender"] = "&#9794;";
             break;
         case "F":
-            $user["gender"] = "Female";
+            $user["gender"] = "&#9792;";
             break;
         default:
-            $user["gender"] = "Unspecify";
+            $user["gender"] = "";
     }
 }
 ?>
+<input type="hidden" id="profileIndexUid" value="<?= $user['uid'] ?>">
 <div class="simpleBox">
     <ul class="simpleBoxLi">
         <?php
@@ -42,8 +44,20 @@ if (isset($this->error)) {
                         <img class="prodileIndexAvatar" src="<?= $user["img"] ?>"/>
                     </td>
                     <td>
-                        <div><?= $user["nickname"] ?></div>
-                        <div><?= $user["gender"] ?></div>
+                        <div>
+                            <?php
+                            if (!isset($this->isMe)) {
+                                echo "<div id='profileIndexFollow'>";
+                                if($isFollowing) {
+                                    echo "<input type='checkbox' id='profileIndexFollowInput' checked='checked' /><label id='profileIndexFollowLabel' for='profileIndexFollowInput'>&#10004; Followed</label>";
+                                } else {
+                                    echo "<input type='checkbox' id='profileIndexFollowInput' /><label id='profileIndexFollowLabel' for='profileIndexFollowInput'>Follow</label>";
+                                }
+                                echo "</div>";
+                            }
+                            ?>
+                        </div>
+                        <div><?= $user["nickname"] ?> <strong><?= $user["gender"] ?></strong></div>
                         <div>Joined since <?= $user["date"] ?></div>
                     </td>
                 </tr>

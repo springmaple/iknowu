@@ -1,0 +1,19 @@
+<?php
+$noUpdate = $this->noUpdate;
+$updates  = $this->updates;
+?>
+<?php if(!empty($noUpdate)): ?>
+<h3><?= $this->noUpdate ?></h3>
+<?php else: ?>
+<div class="simpleBox">
+    <ul class="simpleBoxLi">
+        <?php
+        foreach($updates as $update){
+            echo "<li>";
+            print_r($update);
+            echo "</li>";
+        }
+        ?>
+    </ul>
+</div>
+<?php endif; ?>

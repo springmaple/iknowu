@@ -6,14 +6,16 @@
     <div>
         <h3>OR</h3>
         <p>Sign up manually</p>
-        <form name="reg" action="" method="post">
+        <form id="regForm" name="reg" action="" method="post">
             <table class="regTable">
                 <tr>
                     <td>
                         Email: 
                     </td>
                     <td>
-                        <input type="text" name="regEmail" class="simpleBoxTextInput">
+                        <input type="email" name="regEmail" id="regEmail" class="simpleBoxTextInput" required="true">
+                        <label for="regEmail" class="validation_err_msg error" generated="true"></label>
+                        <label id="regEmailError" class="validation_err_msg error"></label>
                     </td>
                     <td>
                         <img class="profileEditQuestionMark" src="<?= ROOT_URI . "/images/mslc/questionMark.jpg" ?>">
@@ -25,7 +27,8 @@
                         Password:
                     </td>
                     <td>
-                        <input type="password" name="regPassword" class="simpleBoxTextInput">
+                        <input type="password" name="regPassword" class="simpleBoxTextInput" required="true" minlength="6" maxlength="20" nowhitespace="true">
+                        <label for="regPassword" class="validation_err_msg error" generated="true"></label>
                     </td>
                     <td>
                         <img class="profileEditQuestionMark" src="<?= ROOT_URI . "/images/mslc/questionMark.jpg" ?>">
@@ -37,7 +40,8 @@
                         Preferred Nick:
                     </td>
                     <td>
-                        <input type="text" name="regNick" class="simpleBoxTextInput">
+                        <input type="text" name="regNick" class="simpleBoxTextInput" required="true" alphanumeric="true" maxlength="20" minlength="5" nowhitespace="true">
+                        <label for="regNick" class="validation_err_msg error" generated="true"></label>
                     </td>
                     <td>
                         <img class="profileEditQuestionMark" src="<?= ROOT_URI . "/images/mslc/questionMark.jpg" ?>">
@@ -46,7 +50,7 @@
                 </tr>
                 <tr>
                     <td columnspan="3">
-                        <button class="simpleBoxButton" type="submit" name="submit">Submit</button>
+                        <span class="simpleBoxButton" id="regSubmitButton">Submit</span>
                     </td>
                 </tr>
             </table>

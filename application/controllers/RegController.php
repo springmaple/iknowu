@@ -127,11 +127,11 @@ class RegController extends Zend_Controller_Action {
         if(!$rowAffected) {
             $error = "Internal server error, please try again or contact us.";
         }
-        $this->view->error = $error;
 
         // ******************************************************
         // ************ Returns and Assignment ******************
         // ******************************************************
+        $this->view->error = $error;
     }
 
 }

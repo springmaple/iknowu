@@ -24,6 +24,7 @@ class ProfileController extends Zend_Controller_Action {
         $db = Zend_Registry::get("db");
         $userDb = new Application_Model_DbTable_User();
         $error = false;
+        $followDb = new Application_Model_DbTable_Follow();
 
         // ******************************************************
         // ************ Function Logics *************************
@@ -56,6 +57,16 @@ class ProfileController extends Zend_Controller_Action {
         foreach ($tmpAvailableProducts as $key => $availableProduct) {
             $products[$key]['image'] = getFirstImage($availableProduct["pid"]);
         }
+        // ***** @Do:  check if user is self / display follow button
+        $follow = false;
+        $followSql = $followDb->select()
+                ->from($followDb)
+                ->where("followeruid = ?", $session->uid)
+                ->where("followinguid = ?", $id);
+        $followQuery = $followSql->query();
+        if($followQuery->rowCount() > 0) {
+            $follow = true;
+        }
 
         // ******************************************************
         // ************ Returns and Assignment ******************
@@ -72,6 +83,7 @@ class ProfileController extends Zend_Controller_Action {
         $this->view->user = $user;
         $this->view->productNum = $results->rowCount();
         $this->view->products = $products;
+        $this->view->isFollowing = $follow;
     }
 
     public function editAction() {

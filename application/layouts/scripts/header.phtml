@@ -5,7 +5,6 @@
 <ul class="personalStuffUl">
     <li>
         <a id="myCart" class="headerMiniIconA">
-            <!--img id="headerShoppingCartIconImg" class="headerIconImg" src="<?= ROOT_URI . "/images/mslc/shoppingCart.jpg" ?>"-->
             <div class="headerMiniIconText">My cart (<span id="headerShoppingCartLink"><?= Zend_Registry::get("jcart")->get_item_count() ?></span>)</div>
         </a>
         <div id="myCartPopup" class="myCartPopup profileControlDropdownMenu">
@@ -53,7 +52,7 @@
                     <tr>
                         <td></td>
                         <td>
-                            <a href="<?= $this->url(array("controller"=>"reg", "action"=>"forgotpassword")) ?>" class="forgotPassword">Forgot your password?</a>
+                            <a href="<?= $this->url(array("controller" => "reg", "action" => "forgotpassword")) ?>" class="forgotPassword">Forgot your password?</a>
                         </td>
                     </tr>
                     <tr>
@@ -81,23 +80,23 @@
         <!-- dropdown content here -->
         <!-- message link & icon -->
         <li>
-            <a class="headerMiniIconA">
+            <a id="myUpdate" href="<?= $this->url(array("controller" => "update", "action" => "index")) ?>" class="headerMiniIconA">
                 <!--img id="headerMessageIconImg" class="headerIconImg" src="<?= ROOT_URI . "/images/mslc/message.jpg" ?>"-->
-                <div class="headerMiniIconText">Message (0)</div>
+                <div class="headerMiniIconText">Update (0)</div>
             </a>
         </li>
         <li class="profileControlDropdownLi">
-                <a class="headerMiniIconA" href="<?= $this->url(array("controller" => "profile", "action" => "index")); ?>" id="profileControlDropdown" class="headerMiniIconA" style="position: relative">
-                    <div class="headerMiniIconText"><?= $user['nickname'] ?> &#x25BC;</div>
-                </a>
-                <!-- dropdown menu here -->
-                <div class="profileControlDropdownMenu">
-                    <ul class="dropdownList">
-                        <li><a class="headerProfileNavi_a" href="<?= $this->url(array("controller" => "profile", "action" => "edit")); ?>">Profile Setting</a></li>
-                        <li><a class="headerProfileNavi_a" href="<?= $this->url(array("controller" => "report", "action" => "index")); ?>">My Reports</a></li>
-                        <li id="signoutLink"><a class="headerProfileNavi_a">Sign out</a></li>
-                    </ul>
-                </div>
+            <a class="headerMiniIconA" href="<?= $this->url(array("controller" => "profile", "action" => "index")); ?>" id="profileControlDropdown" class="headerMiniIconA" style="position: relative">
+                <div class="headerMiniIconText"><?= $user['nickname'] ?> &#x25BC;</div>
+            </a>
+            <!-- dropdown menu here -->
+            <div class="profileControlDropdownMenu">
+                <ul class="dropdownList">
+                    <li><a class="headerProfileNavi_a" href="<?= $this->url(array("controller" => "profile", "action" => "edit")); ?>">Profile Setting</a></li>
+                    <li><a class="headerProfileNavi_a" href="<?= $this->url(array("controller" => "report", "action" => "index")); ?>">My Reports</a></li>
+                    <li id="signoutLink"><a class="headerProfileNavi_a">Sign out</a></li>
+                </ul>
+            </div>
         </li>
         <!-- user avatar -->
         <?php if (stristr($user["img"], ".")): ?>

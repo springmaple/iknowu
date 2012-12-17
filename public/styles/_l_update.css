@@ -1,0 +1,30 @@
+.updateIndexTable {
+    border: none;
+    border-spacing: 10px;
+    background-color: white;
+    width: 900px;
+}
+.updateIndexTable tr td {
+    vertical-align: top;
+}
+
+
+.updateIndexUserTd {
+    width: 200px;
+    border: #CCC solid 1px;
+}
+.updateIndexUserUl {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+
+.updateIndexContentTd {
+    width: 650px;
+}
+.updateIndexIframe {
+    border: none;
+    width: max-content;
+    height: max-content;
+}
