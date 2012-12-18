@@ -189,6 +189,7 @@ class ProductController extends Zend_Controller_Action {
             $this->view->sizes = $sizes;
             $this->view->comments = $comments;
             $this->view->uid = $authSession->uid;
+            $this->view->appid = Zend_Registry::get("fb")["appId"];
         }
     }
 

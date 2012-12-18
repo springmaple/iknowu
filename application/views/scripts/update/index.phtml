@@ -1,24 +1,41 @@
 <?php
 $noFollow = $this->noFollow;
 $noUpdate = $this->noUpdate;
+$subscribedUsers = $this->subscribedUsers;
 ?>
 <?php if ($noFollow): ?>
- <p>You are not following anyone yet. Go to a seller's profile and click on the follow button to start receive updates from them.</p>
- <?php elseif ($noUpdate): ?>
- <p>You don't have any update at this moment, click into any seller's profile and start following them!</p>
+    <p>You are not following anyone yet. Go to a seller's profile and click on the follow button to start receive updates from them.</p>
+<?php elseif ($noUpdate): ?>
+    <p>You don't have any update at this moment, click into any seller's profile and start following them!</p>
 <?php else: ?>
     <table class="updateIndexTable">
         <tr>
             <td class="updateIndexUserTd">
+                <span id="updateIndexShowAll" class="simpleBoxButton">Show All</span>
                 <ul class="updateIndexUserUl">
-                    <li><a class="simpleBoxLink">All Updates</a></li>
                     <?php
-                    // ***** @Do: loop and get all updates
+                    // ***** @Do: loop and get all subscribed users
+                    foreach ($subscribedUsers as $user):
+                        ?>
+                    <li class="updateIndexFilterLi" uid="<?= $user['uid'] ?>">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <img class="updateIndexUserImg" src="<?= ROOT_URI . "/images/avatars/{$user["img"]}" ?>">
+                                    </td>
+                                    <td>
+                                        <div class="updateIndexUserNickName" ><?= $user["nickname"] ?></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </li>
+                        <?php
+                    endforeach;
                     ?>
                 </ul>
             </td>
             <td class="updateIndexContentTd">
-                <iframe id="updateIndexIframe" class="updateIndexIframe" src="<?= ROOT_DOMAIN . "/update/updateframe?id=0" ?>"></iframe>
+                <iframe id="updateIndexIframe" class="updateIndexIframe autoHeight" src="<?= ROOT_DOMAIN . "/update/updateframe?id=0" ?>"></iframe>
             </td>
         </tr>
     </table>

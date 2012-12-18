@@ -11,20 +11,28 @@
 
 .updateIndexUserTd {
     width: 200px;
-    border: #CCC solid 1px;
 }
 .updateIndexUserUl {
     list-style: none;
     margin: 0;
     padding: 0;
 }
-
+.updateIndexUserImg {
+    width: 50px;
+    height: 50px;
+}
+.updateIndexUserNickName {
+    font-size: 0.9em;
+    font-weight: bold;
+}
+.updateIndexFilterLi {
+    cursor: pointer;
+}
 
 .updateIndexContentTd {
     width: 650px;
 }
 .updateIndexIframe {
     border: none;
-    width: max-content;
-    height: max-content;
+    width: 100%;
 }

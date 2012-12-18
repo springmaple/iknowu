@@ -1,0 +1,30 @@
+<?php
+$feedbacks = $this->feedbacks;
+$emptyFeedback = "";
+if (count($feedbacks) == 0) {
+    $emptyFeedback = "No feedback at the moment.";
+}
+?>
+<div class="simpleBox">
+    <ul class="simpleBoxLi">
+        <li><h3>Feedback Viewer</h3></li>
+        <li>Actions: <a class="feedbackViewAction" id="feedbackViewSelectAll">Check All</a> &middot; <a class="feedbackViewAction" id="feedbackViewDeselectAll">Uncheck All</a> &middot; <a class="feedbackViewAction" id="feedbackViewDeleteAll">Delete All Selected</a></li>
+        <?php
+        if (empty($emptyFeedback)) {
+            foreach ($feedbacks as $feedback) {
+                $unseen = $feedback["seen"] ? "" : "unseenFeedback";
+                $feedback["content"] = str_replace("<br>", "  ", $feedback["content"]);
+                if (trim($feedback["content"]) == "") {
+                    $feedback["content"] = "<pre><span class='feedbackViewEmptyContent'>&lt; no content &gt;</span></pre>";
+                }
+                echo "<li class='feedbackViewLi {$unseen}'>";
+                echo "<input class='feedbackViewCheckbox' type='checkbox' ref1='{$feedback['email']}' ref2='{$feedback["date"]}'> <a href='{$this->url(array("controller"=>"feedback", "action"=>"viewer"))}?email={$feedback["email"]}&date={$feedback["date"]}' class='feedbackViewLink'><div class='feedbackViewTitle'>{$feedback["content"]}</div>
+                        <span class='feedbackViewInfo'><i>from</i> <strong>{$feedback['email']}</strong> <i>at</i> <strong>{$feedback["date"]}</strong> <i>rated</i> <strong>{$feedback["rate"]}</strong></span></a>";
+                echo "</li>";
+            }
+        } else {
+            echo "<li style='width: 900px'><i>{$emptyFeedback}</i></li>";
+        }
+        ?>
+    </ul>
+</div>

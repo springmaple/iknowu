@@ -1,0 +1,84 @@
+<?php
+$error = $this->error;
+if (!empty($error)) {
+    echo "<h3>$error</h3>";
+} else {
+    ?>
+    <!DOCTYPE html>
+    <html>
+        <head>
+
+            <link href="/iknowu/public/styles/_l_global.css" media="screen" rel="stylesheet" type="text/css" >
+
+            <script type="text/javascript" src="/iknowu/public/scripts/_jquery-1.8.2.min.js"></script>
+            <script type="text/javascript" src="/iknowu/public/scripts/_l_global.js"></script>
+            <script type="text/javascript" src="/iknowu/public/scripts/_k_jquery.validate.js"></script>
+            <script>
+                $(document).ready(function(){
+                    var adminRegisterForm = $("#adminRegisterForm").validate();
+                    $("#adminRegisterButton").click(function(){
+                        if(adminRegisterForm.form()){
+                            $("#adminRegisterForm").submit();
+                        }
+                    });
+                });
+            </script>
+        </head>
+        <body>
+            <div class="simpleBox">
+                <ul class="simpleBoxLi">
+                    <li>
+                        <p><h4>Hi, thanks for choosing our web portal software.</h4></p>
+                        <p>For the first time, please register a super administrator account.<br>
+                            NOTE: Only ONE super admin is allowed to exist in this system.</p>
+                    </li>
+                    <li>
+                        <form id="adminRegisterForm" name="adminRegisterForm" action="registersubmit" method="post">
+                            <table>
+                                <tr>
+                                    <td>
+                                        Email:
+                                    </td>
+                                    <td>
+                                        <input id="adminRegisterEmail" name="adminRegisterEmail" type="email" required="true">
+                                        <label for="adminRegisterEmail" class="validation_err_msg error" generated="true"></label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Nickname:
+                                    </td>
+                                    <td>
+                                        <input id="adminRegisterNickname" name="adminRegisterNickname" type="text" minlength="6" maxlength="15" alphanumeric="true" required="true">
+                                        <label for="adminRegisterNickname" class="validation_err_msg error" generated="true"></label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Password:
+                                    </td>
+                                    <td>
+                                        <input id="adminRegisterPassword" name="adminRegisterPassword" type="password" minlength="6" maxlength="12" required="true">
+                                        <label for="adminRegisterPassword" class="validation_err_msg error" generated="true"></label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Reconfirm password:
+                                    </td>
+                                    <td>
+                                        <input id="adminRegisterReconfirmPassword" name="adminRegisterReconfirmPassword" type="password" equalTo="#adminRegisterPassword" required="true">
+                                        <label for="adminRegisterReconfirmPassword" class="validation_err_msg error" generated="true"></label>
+                                    </td>
+                                </tr>
+                            </table>
+                        </form>
+                    </li>
+                    <li>
+                        <span id="adminRegisterButton" class="simpleBoxButton">Submit</span>
+                    </li>
+                </ul>
+            </div>
+        </body>
+    </html>
+<?php } ?>

@@ -9,6 +9,9 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
       Zend_Registry::set("db", $db);
       }
      * */
+    protected function _initTimezone() {
+        date_default_timezone_set('Asia/Kuala_Lumpur');
+    }
 
     protected function _initDoctype() {
         $this->bootstrap('view');

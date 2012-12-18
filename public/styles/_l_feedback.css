@@ -1,0 +1,54 @@
+.feedbackContent {
+    width: 800px;
+    height: 300px;
+    resize: none;
+    padding: 5px;
+}
+
+.feedbackRate {
+    margin-left: 20px;
+    margin-right: 10px;
+}
+
+.feedbackEmail {
+    width: 400px;
+}
+
+/* feedback viewer */
+.feedbackViewLi:hover {
+    background-color: #CCC;
+}
+.unseenFeedback {
+    font-weight: bolder;
+    background-color: #eeeeee;
+}
+.feedbackViewTitle {
+    display: inline-block;
+    width: 500px;
+    white-space:nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-left: 5px;
+}
+.feedbackViewInfo {
+    font-size: 0.6em;
+    color: #888;
+}
+.feedbackViewEmptyContent {
+    font-style: italic;
+}
+.feedbackViewLink {
+    cursor: pointer;
+}
+.feedbackViewAction {
+    color: #0000ff;
+    cursor: pointer;
+}
+
+/* viewer */
+.feedbackViewerContent {
+    width: 900px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: clip;
+}

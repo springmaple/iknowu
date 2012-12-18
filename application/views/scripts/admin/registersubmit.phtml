@@ -1,0 +1,16 @@
+<?php
+$error = $this->error;
+if (!empty($error)) {
+    echo "<h4>{$error}</h4>";
+} else {
+    ?>
+    <script>
+        $(document).ready(function(){
+            setTimeout(function(){
+               window.location = "<?= ROOT_DOMAIN . "/admin" ?>";
+            }, 5000)
+        });
+    </script>
+    <p><h4>Registered successfully, please wait while we are trying to sign you in as SUPER ADMINISTRATOR.</h4></p>
+    <p><a href="<?= $this->url(array("controller" => "admin", "action" => "index")) ?>">Click here if you are not redirected within 5 seconds.</a></p>
+<?php } ?>

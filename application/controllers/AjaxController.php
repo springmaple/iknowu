@@ -24,6 +24,8 @@ class AjaxController extends Zend_Controller_Action {
                 ->addActionContext('rate', 'html')
                 ->addActionContext('checkemail', 'html')
                 ->addActionContext('follow', 'html')
+                ->addActionContext('deletefeedback', 'html')
+                ->addActionContext('unreadfeedback', 'html')
                 ->initContext();
     }
 
@@ -362,6 +364,35 @@ class AjaxController extends Zend_Controller_Action {
             return;
         }
         echo "failed";
+    }
+
+    public function deletefeedbackAction() {
+        $email = $this->_getParam("email");
+        $date = $this->_getParam("date");
+        $where = array("email = ?" => $email, "date = ?" => $date);
+
+        $feedbackDb = new Application_Model_DbTable_Feedback;
+
+        $result = $feedbackDb->delete($where);
+        if ($result) {
+            echo true;
+        } else {
+            echo false;
+        }
+    }
+
+    public function unreadfeedbackAction() {
+        $email = $this->_getParam("email");
+        $date = $this->_getParam("date");
+
+        $feedbackDb = new Application_Model_DbTable_Feedback;
+
+        $result = $feedbackDb->update(array("seen" => 0), array("email = ?" => $email, "date = ?" => $date));
+        if ($result) {
+            echo true;
+        } else {
+            echo false;
+        }
     }
 
 }

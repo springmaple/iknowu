@@ -1,0 +1,24 @@
+<?php
+$feedback = $this->feedback;
+$error = $this->error;
+?>
+<?php if (!(empty($error))): ?>
+    <h3><?= $error ?></h3>
+<?php else: ?>
+    <p>Actions: <a id="feedbackViewerDelete" ref1="<?= $feedback["email"] ?>" ref2="<?= $feedback["date"] ?>" class="feedbackViewAction">Delete</a> &middot; <a ref1="<?= $feedback["email"] ?>" ref2="<?= $feedback["date"] ?>" id="feedbackViewerMarkAsUnread" class="feedbackViewAction">Mark as unread</a> &middot; <a href="<?= $this->url(array("controller" => "feedback", "action" => "view")) ?>" class="feedbackViewAction">Back</a></p>
+
+    <div class="simpleBox">
+        <ul class="simpleBoxLi">
+            <li>
+                From: <strong><?= $feedback["email"] ?></strong> at <strong class="feedbackViewerDate" title="<?= date("c", strtotime($feedback["date"])) ?>"></strong>
+            </li>
+            <li>
+                Rated: <strong><?= $feedback["rate"] ?></strong>
+            </li>
+            <li>
+                <h4>Additional Note: </h4>
+                <div class="feedbackViewerContent"><?= $feedback["content"] ?></div>
+            </li>
+        </ul>
+    </div>
+<?php endif; ?>

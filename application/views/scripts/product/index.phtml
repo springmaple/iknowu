@@ -10,6 +10,7 @@ if ($this->justComment || $this->justDeleteComment) {
     </script>
     <?php
 }
+$appid = $this->appid;
 ?>
 
 <?php
@@ -60,12 +61,12 @@ $rate = $this->rate; // Array ( [0] => Array ( [numberrate] => 0 [totalrate] => 
                         </span>
                         <span>
                             <?php
-                            if(!$rate['numberrate']) {
+                            if (!$rate['numberrate']) {
                                 // no rating
                                 echo "No rating";
                             } else {
                                 $point = $rate['totalrate'] / $rate['numberrate'];
-                                echo  $point . " (". $rate['numberrate'] ." rates)";
+                                echo $point . " (" . $rate['numberrate'] . " rates)";
                             }
                             ?>
                         </span>
@@ -133,6 +134,14 @@ $rate = $this->rate; // Array ( [0] => Array ( [numberrate] => 0 [totalrate] => 
             }
             ?>
         </table>
+        <a href="https://www.facebook.com/dialog/feed?
+           app_id=<?= $appid ?>&
+           link=<?= ROOT_DOMAIN . "/product?id=" . $product["pid"] ?>&
+           picture=http://img12.imageshack.us/img12/3248/iknowu.jpg&
+           name=<?= $product["pname"] ?>&
+           caption=<?= "Style" ?>&
+           description=<?= $product['desc'] ?>&
+           redirect_uri=<?= ROOT_DOMAIN . "/product?id=" . $product["pid"] ?>"><img class="facebookShareButton" src="<?= ROOT_URI . "/images/mslc/facebookShare.jpg" ?>"></a>
     </div>
 </div>
 <!-- --------------------------------------------------------------------- -->

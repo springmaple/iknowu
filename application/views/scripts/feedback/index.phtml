@@ -1,0 +1,30 @@
+<?php
+$email = $this->email;
+?>
+<div class="simpleBox">
+    <form id="feedbackForm" name="feedbackForm" action="<?= $this->url(array("controller" => "feedback", "action" => "submit")) ?>" method="get" >
+        <ul class="simpleBoxLi">
+            <li>
+                <p><strong>How would you like to rate our website?</strong></p>
+                <input class="feedbackRate" type="radio" id="feedbackRate1" name="feedbackRate" value="poor"><label for="feedbackRate1">Poor</label>
+                <input class="feedbackRate" type="radio" id="feedbackRate2" name="feedbackRate" value="fair"><label for="feedbackRate2">Fair</label>
+                <input class="feedbackRate" type="radio" id="feedbackRate3" name="feedbackRate" value="good"><label for="feedbackRate3">Good</label>
+                <input class="feedbackRate" type="radio" id="feedbackRate4" name="feedbackRate" value="excellent"><label for="feedbackRate4">Excellent</label> 
+                <div><label for="feedbackRate" generated="true" class="validation_err_msg error"></label></div>
+            </li>
+            <li>
+                <p><strong>Please tell us how we could have done better (Optional).</strong></p>
+                <textarea class="simpleBoxTextArea feedbackContent" id="feedbackContent" name="feedbackContent" maxlength="1000"></textarea>
+                <div>You have <span id="feedbackTextLeft">1000</span> characters left.</div>
+                <div><label for="feedbackContent" generated="true" class="validation_err_msg error"></label></div>
+            </li>
+            <li>
+                <div><h4>Your email address</h4> <input value="<?= $email ?>" name="feedbackEmail" id="feedbackEmail" type="email" required="true" class="simpleBoxTextInput feedbackEmail"></div>
+                <div><label for="feedbackEmail" generated="true" class="validation_err_msg error"></label></div>
+            </li>
+            <li>
+                <span id="simpleBoxButton" class="simpleBoxButton">Submit</span>
+            </li>
+        </ul>
+    </form>
+</div>

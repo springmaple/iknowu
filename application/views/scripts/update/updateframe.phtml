@@ -1,19 +1,57 @@
 <?php
 $noUpdate = $this->noUpdate;
-$updates  = $this->updates;
+$updates = $this->updates;
+$followingUsers = $this->followingList;
 ?>
-<?php if(!empty($noUpdate)): ?>
-<h3><?= $this->noUpdate ?></h3>
-<?php else: ?>
-<div class="simpleBox">
-    <ul class="simpleBoxLi">
-        <?php
-        foreach($updates as $update){
-            echo "<li>";
-            print_r($update);
-            echo "</li>";
-        }
-        ?>
-    </ul>
-</div>
-<?php endif; ?>
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            .simpleBoxLi {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+            }
+            .simpleBoxLi li {
+                display: block;
+                border: none;
+                margin: 0;
+                padding: 10px;
+                border-bottom: #ccc solid 1px;
+            }
+            .simpleBoxLi li:last-child {
+                border: none;
+            }
+            .new {
+                background-color: #eeeaf2;
+            }
+            .date {
+                color: #666;
+                font-size: 0.9em;
+            }
+        </style>
+    </head>
+    <body>
+        <?php if (!empty($noUpdate)): ?>
+            <h3><?= $this->noUpdate ?></h3>
+        <?php else: ?>
+            <div>
+                <ul class="simpleBoxLi">
+                    <?php
+                    echo "<div id='a' rel='hi'></div>";
+                    foreach ($updates as $update) {
+                        // Array ( [fromuid] => 2 [touid] => 5 [date] => 2012-12-22 00:00:00 [content] => Testing 2 [seen] => 0 [type] => update )
+                        $class = $update["seen"] ? "" : "new";
+                        echo "<li class='{$class}'>";
+                        echo "<h4>{$followingUsers[$update["fromuid"]]['nickname']}</h4>";
+                        echo "<p>{$update["content"]}</p>";
+                        $date = date("l H:m Y-M-d", strtotime($update['date']));
+                        echo "<span class='date' title='{$date}'>$date</span>";
+                        echo "</li>";
+                    }
+                    ?>
+                </ul>
+            </div>
+        <?php endif; ?>
+    </body>
+</html>
