@@ -1,0 +1,25 @@
+<?php
+$list = $this->list;
+$error = $this->error;
+$users = $this->users;
+$products = $this->products;
+$purchases = $this->purchases;
+?>
+<a href="<?= $this->url(array("controller" => "profile", "action" => "order")) ?>">View Managed Order (History) &#187;</a>
+
+<?php if (!empty($this->error)): ?>
+    <p><?= $error ?></p>
+<?php else: ?>
+    <div class="simpleBox">
+        <ul class="simpleBoxLi">
+            <?php foreach ($list as $purchase): ?>
+                <li>
+                    <div>From <a href="<?= $this->url(array("controller"=>"profile", "action"=>"index")) ?>?id=<?= $purchases[$purchase["purchaseid"]]["uid"] ?>"><?= $users[$purchase["uid"]]["name"] ?></a></div>
+                    <div>Ordered <a href="<?= $this->url(array("controller"=>"product", "action"=>"index")) ?>?id=<?= $purchase["pid"] ?>"><?= $products[$purchase["pid"]]["pname"] ?></a></div>
+                    <div>At <?= $purchases[$purchase["purchaseid"]]["date"] ?></div>
+                    <div><span class="simpleBoxInput">Managed and shipped</span></div>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+<?php endif; ?>

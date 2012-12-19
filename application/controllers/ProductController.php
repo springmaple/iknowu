@@ -143,7 +143,7 @@ class ProductController extends Zend_Controller_Action {
             if ($uid) {
                 $myRateResult = $db->query("SELECT rate 
                     FROM rate
-                    WHERE uid = ?", array($uid));
+                    WHERE uid = ? AND pid = ?", array($uid, $pid));
                 $myRateArray = $myRateResult->fetchAll();
                 if (!empty($myRateArray)) {
                     $myRate = $myRateArray[0]['rate'];
@@ -183,6 +183,9 @@ class ProductController extends Zend_Controller_Action {
                 $comments[$key]['img'] = $user['img'];
             }
 
+            // ***** @Do: check if this product belongs to me
+            $isMe = ($uid == $product["uid"]) ? true : false;
+
             $this->view->rate = $rate[0];
             $this->view->product = $product;
             $this->view->images = $images;
@@ -190,6 +193,7 @@ class ProductController extends Zend_Controller_Action {
             $this->view->comments = $comments;
             $this->view->uid = $authSession->uid;
             $this->view->appid = Zend_Registry::get("fb")["appId"];
+            $this->view->isMe = $isMe;
         }
     }
 
@@ -212,7 +216,6 @@ class ProductController extends Zend_Controller_Action {
     }
 
     public function uploadedAction() {
-// action body        
         $productSession = new Zend_Session_Namespace("productUpload");
         $userSession = new Zend_Session_Namespace("auth");
         if ($this->_getParam("key") == "" || $this->_getParam("key") != md5($productSession->name)) {
@@ -274,6 +277,34 @@ class ProductController extends Zend_Controller_Action {
                 "uid" => $userSession->uid);
             $productDb = new Application_Model_DbTable_Product();
             $pid = $productDb->insert($products);
+
+            // ***** @Do: send update to the user
+            if ($pid) {
+                // get the subscribed users
+                $followDb = new Application_Model_DbTable_Follow;
+                $messageDb = new Application_Model_DbTable_Message;
+                $userDb = new Application_Model_DbTable_User;
+                $followers = $followDb->select()
+                                ->from($followDb, "followeruid")
+                                ->where("followinguid = ?", $userSession->uid)->query()->fetchAll();
+                foreach ($followers as $follower) {
+                    $username = $userDb->find($follower["followeruid"])->toArray()[0]["name"];
+                    $pUrl = ROOT_DOMAIN . "/product?id=" . $pid;
+                    $content = "Hello {$username}, <br><br>I have uploaded <a href='{$pUrl}'>{$productSession->name}</a>. Check it out =)";
+                    $message = array("touid" => $follower["followeruid"], "fromuid" => $userSession->uid, "date" => date("Y-m-d H:i:s"), "seen" => 0, "type" => "update", "content" => $content);
+                    $messageDb->insert($message);
+
+                    /*
+                    $elephant = new Client('http://192.168.10.2:8000', 'socket.io', 1, false, true, true);
+
+                    $elephant->init();
+                    $elephant->send(
+                            ElephantIOClient::TYPE_EVENT, null, null, json_encode(array('name' => 'action', 'args' => 'You have received a new update.'))
+                    );
+                    $elephant->close();
+                    */
+                }
+            }
 
 
             // insert colors
@@ -338,7 +369,7 @@ class ProductController extends Zend_Controller_Action {
             Zend_Session::namespaceUnset("productUpload");
 
 // get product URL
-            $this->view->productUrl = get_tiny_url("http://localhost/iknowu/public/product?id=" . $pid);
+            $this->view->productUrl = get_tiny_url(ROOT_DOMAIN . "/product?id=" . $pid);
         }
     }
 

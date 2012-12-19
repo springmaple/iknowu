@@ -48,6 +48,12 @@ class PaymentController extends Zend_Controller_Action {
             // Paypal count starts at one instead of zero
             $count = 1;
 
+            // ***** @Do: add a token for verifying if the user really came back from paypal after payment
+            $token = uniqid();
+            $config['paypal']['returnUrl'] .= "?token={$token}";
+            $paypalSession = new Zend_Session_Namespace("paypal");
+            $paypalSession->token = $token;
+
             // Build the query string
             $queryString = "?cmd=_cart";
             $queryString .= "&upload=1";
@@ -86,6 +92,76 @@ class PaymentController extends Zend_Controller_Action {
                 die('Couldn&rsquo;t find a PayPal ID in <strong>config.php</strong>.');
             }
         }
+    }
+
+    public function successAction() {
+        // ******************************************************
+        // ************ Variables Initializations ***************
+        // ******************************************************
+        $error = "";
+        $jcart = Zend_Registry::get("jcart");
+        $purchaseDb = new Application_Model_DbTable_Purchase;
+        $purchaseListDb = new Application_Model_DbTable_Purchaselist;
+        $productSizeDb = new Application_Model_DbTable_Prodsize;
+        $authSession = new Zend_Session_Namespace("auth");
+        $paypalSession = new Zend_Session_Namespace("paypal");
+        $token = $this->_getParam("token");
+
+        // ******************************************************
+        // ************ Function Logics *************************
+        // ******************************************************
+        // Array ( [0] => Array ( [id] => 3-2 [name] => Product Testing 2 (XS) [price] => 100 [qty] => 2 [url] => http://tinyurl.com/carwu59 [subtotal] => 200 ) )
+        if ($token == "") {
+            $error = "You do not have a valid access token.";
+        }
+        if (!isset($authSession->uid)) {
+            throw new Zend_Controller_Action_Exception("NotLogin", EXCEPTION_NO_LOGIN);
+        }
+        $contents = $jcart->get_contents();
+        if (count($contents) == 0) {
+            $error = "You don't have any items in your cart.";
+        } else {
+            if (isset($paypalSession->token) && $paypalSession->token == $token) {
+                // ***** @Do: create a purchase record for the purchase list
+                $data = array("uid" => $authSession->uid, "date" => date("Y-m-d H:i:s"));
+                $purchaseid = $purchaseDb->insert($data);
+                foreach ($contents as $purchase) {
+                    // quantity, pid, purchaseid, sizeid, managed, datemanaged
+                    // ***** @Do: break the id into pid and sizeid
+                    $ids = explode("-", $purchase['id']);
+                    $list = array("quantity" => $purchase["qty"], "pid" => $ids[0], "sizeid" => $ids[1], "purchaseid" => $purchaseid, "managed" => 0);
+                    // ***** @Do: insert into purchase list
+                    $isInserted = $purchaseListDb->insert($list);
+                    // ***** @Do: update quantityleft in product_size table
+                    if ($isInserted) {
+                        $quantityLeft = $productSizeDb->select()
+                                        ->from($productSizeDb, "quantityleft")
+                                        ->where("pid = ?", $ids[0])
+                                        ->where("sizeid = ?", $ids[1])
+                                        ->query()
+                                        ->fetchAll()[0]["quantityleft"];
+                        $quantityLeft -= $purchase['qty'];
+                        $isUpdated = $productSizeDb->update(array("quantityleft" => $quantityLeft), array("pid = ?" => $ids[0], "sizeid = ?" => $ids[1]));
+                        if($isUpdated) {
+                            // ***** @Do: send message to inform the user
+                            // TODO
+                        }
+                    }
+                }
+                // ***** @Do: clear the items in the cart after succesfully insert
+                $jcart->empty_cart();
+                // ***** @Do: clear the token session after inserted the purchase list into the database.
+                $paypalSession->unlock();
+                Zend_Session::namespaceUnset("paypal");
+            } else {
+                $error = "Invalid access token.";
+            }
+        }
+
+        // ******************************************************
+        // ************ Returns and Assignment ******************
+        // ******************************************************
+        $this->view->error = $error;
     }
 
 }

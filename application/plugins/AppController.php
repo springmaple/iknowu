@@ -32,17 +32,33 @@ class Plugin_AppController extends Zend_Controller_Plugin_Abstract {
             if (isset($session->uid)) {
                 $isLoggedin = true;
                 $stm = $userDb->find($session->uid);
-                $view->uInfo = $stm->toArray();
+                $user = $stm->toArray();
+                
+                $session->role = $user[0]["role"];
+                $view->role = $user[0]["role"];
+                $view->uInfo = $user;
             } else {
+                $view->role = "";
                 $isLoggedin = false;
             }
             $view->isLoggedin = $isLoggedin;
+            
+            // ***** @Do: check if this person is admin
+            
 
             // ***** @Do: Get the updates amount of the particular user
             if ($isLoggedin) {
                 $sql = $db->query("SELECT count(fromuid) AS total FROM message WHERE touid='{$session->uid}' AND type='update' AND seen=0 ");
                 $result = $sql->fetchAll();
                 $view->totalUpdate = $result[0]["total"];
+            }
+            
+            // ***** @Do: Get the unread messages
+            // ***** @Do: Get the updates amount of the particular user
+            if ($isLoggedin) {
+                $sql = $db->query("SELECT count(fromuid) AS total FROM message WHERE touid='{$session->uid}' AND type='message' AND seen=0 ");
+                $result = $sql->fetchAll();
+                $view->totalMessage = $result[0]["total"];
             }
         endif;
     }

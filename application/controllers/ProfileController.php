@@ -64,7 +64,7 @@ class ProfileController extends Zend_Controller_Action {
                 ->where("followeruid = ?", $session->uid)
                 ->where("followinguid = ?", $id);
         $followQuery = $followSql->query();
-        if($followQuery->rowCount() > 0) {
+        if ($followQuery->rowCount() > 0) {
             $follow = true;
         }
 
@@ -174,6 +174,82 @@ class ProfileController extends Zend_Controller_Action {
             $this->view->isLoggedin = false;
             $this->view->uInfo = null;
         }
+    }
+
+    public function orderAction() {
+        // ******************************************************
+        // ************ Variables Initializations ***************
+        // ******************************************************
+        $db = Zend_Registry::get("db");
+        $userDb = new Application_Model_DbTable_User;
+        $productDb = new Application_Model_DbTable_Product;
+        $authSession = new Zend_Session_Namespace("auth");
+        $purchaseDb = new Application_Model_DbTable_Purchase;
+
+        $error = "";
+        $list = "";
+        $users = "";
+        $prods = "";
+        $purchases = "";
+        
+
+        // ******************************************************
+        // ************ Function Logics *************************
+        // ******************************************************
+        if (!isset($authSession->uid)) {
+            throw new Zend_Controller_Action_Exception("NotLogin", EXCEPTION_NO_LOGIN);
+        }
+        $uid = $authSession->uid;
+        $products = $db->query("SELECT DISTINCT pid FROM get_available_product_view WHERE uid = {$uid}")->fetchAll();
+        if (count($products) == 0) {
+            $error = "You do not have any product in sell.";
+        } else {
+            $array = array();
+            foreach ($products as $prod) {
+                array_push($array, $prod["pid"]);
+            }
+            $where = implode(",", $array);
+            $list = $db->query("SELECT * FROM purchaselist WHERE managed = 0 AND pid IN ({$where})")->fetchAll();
+
+            if (count($list) == 0) {
+                $error = "You do not have any unmanaged order at this moment.";
+            }
+
+            // ***** @Do: get product list
+            $prods = array();
+            foreach ($array as $pid) {
+                $prods[] = $productDb->find($pid)->toArray();
+            }
+            
+            // ***** @Do: get purchase 
+            $purchases = array();
+            $pur = array();
+            foreach ($list as $p) {
+                $pur[$p['purchaseid']] = $p["purchaseid"];
+            }
+            foreach($pur as $purid) {
+                $purchases[$purid] = $purchaseDb->find($purid)->toArray();
+            }
+            
+            // ***** @Do: get user list
+            $users = array();
+            $u = array();
+            foreach ($purchases as $p) {
+                $u[$p['uid']] = $p["uid"];
+            }
+            foreach ($u as $uid) {
+                $users[$uid] = $userDb->find($uid)->toArray();
+            }
+        }
+
+        // ******************************************************
+        // ************ Returns and Assignment ******************
+        // ******************************************************
+        $this->view->users = $users;
+        $this->view->products  = $prods;
+        $this->view->error = $error;
+        $this->view->list = $list;
+        $this->view->purchases = $purchases;
     }
 
 }

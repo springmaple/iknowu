@@ -85,6 +85,12 @@
                 <div class="headerMiniIconText">Update (<?= $this->totalUpdate ?>)</div>
             </a>
         </li>
+        <li>
+            <a id="myUpdate" href="<?= $this->url(array("controller" => "message", "action" => "index")) ?>" class="headerMiniIconA">
+                <!--img id="headerMessageIconImg" class="headerIconImg" src="<?= ROOT_URI . "/images/mslc/message.jpg" ?>"-->
+                <div class="headerMiniIconText">Message (<?= $this->totalMessage ?>)</div>
+            </a>
+        </li>
         <li class="profileControlDropdownLi">
             <a class="headerMiniIconA" href="<?= $this->url(array("controller" => "profile", "action" => "index")); ?>" id="profileControlDropdown" class="headerMiniIconA" style="position: relative">
                 <div class="headerMiniIconText"><?= $user['nickname'] ?> &#x25BC;</div>
@@ -93,6 +99,8 @@
             <div class="profileControlDropdownMenu">
                 <ul class="dropdownList">
                     <li><a class="headerProfileNavi_a" href="<?= $this->url(array("controller" => "profile", "action" => "edit")); ?>">Profile Setting</a></li>
+                    <li><a class="headerProfileNavi_a" href="<?= $this->url(array("controller" => "profile", "action" => "purchasehistory")); ?>">Purchasing History</a></li>
+                    <li><a class="headerProfileNavi_a" href="<?= $this->url(array("controller" => "profile", "action" => "order")); ?>">Manage Order</a></li>
                     <li><a class="headerProfileNavi_a" href="<?= $this->url(array("controller" => "report", "action" => "index")); ?>">My Reports</a></li>
                     <li id="signoutLink"><a class="headerProfileNavi_a">Sign out</a></li>
                 </ul>

@@ -48,7 +48,7 @@ if (isset($this->error)) {
                             <?php
                             if (!isset($this->isMe)) {
                                 echo "<div id='profileIndexFollow'>";
-                                if($isFollowing) {
+                                if ($isFollowing) {
                                     echo "<input type='checkbox' id='profileIndexFollowInput' checked='checked' /><label id='profileIndexFollowLabel' for='profileIndexFollowInput'>&#10004; Followed</label>";
                                 } else {
                                     echo "<input type='checkbox' id='profileIndexFollowInput' /><label id='profileIndexFollowLabel' for='profileIndexFollowInput'>Follow</label>";
@@ -56,6 +56,20 @@ if (isset($this->error)) {
                                 echo "</div>";
                             }
                             ?>
+                            <?php
+                            if (!isset($this->isMe) && $this->isLoggedin) {
+                                echo "<span id='profileIndexSendMessage' class='simpleBoxButton'>Send Message</span>";
+                                ?>
+                                
+                                <form id="profileIndexSendMessageForm">
+                                    <div><textarea class="simpleBoxTextArea profileIndexSendMessageContent" name="profileIndexSendMessageContent" maxlength="200" id="profileIndexSendMessageContent" required="true"></textarea></div>
+                                    <div><label for="profileIndexSendMessageContent" class="validation_err_msg error" generated="true"></label></div>
+                                    <div><span ref="<?= $user["uid"] ?>" id="profileIndexSendMessageButton" class="simpleBoxButton">Send</span></div>
+                                </form>
+                                <?php
+                            }
+                            ?>
+
                         </div>
                         <div><?= $user["nickname"] ?> <strong><?= $user["gender"] ?></strong></div>
                         <div>Joined since <?= $user["date"] ?></div>

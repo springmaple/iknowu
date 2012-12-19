@@ -100,7 +100,11 @@ $rate = $this->rate; // Array ( [0] => Array ( [numberrate] => 0 [totalrate] => 
     </table>
     <div class="simpleBox productIndexSizeDiv">
         <!-- product availability -->
-        <h3>Available in:</h3>
+        <p><strong>Available in: </strong><?php
+                    if ($this->isMe) {
+                        echo "<span ref1={$product["pid"]} id='productIndexCloseProduct' class='simpleBoxControlPanel'>Remove this product</span>";
+                    }
+                    ?></p>
         <table>
             <?php
             // action body
@@ -123,9 +127,15 @@ $rate = $this->rate; // Array ( [0] => Array ( [numberrate] => 0 [totalrate] => 
                                 <input type="hidden" name="my-item-price" value="<?= $product['price'] ?>" />
                                 <input type="hidden" name="my-item-url" value="<?= get_tiny_url("http://localhost/iknowu/public/product?id=" . $product['pid']) ?>" />
                                 <input type="hidden" name="my-item-qty" value="1" />
-                                <button type="submit" name="my-add-button" class="addToCartButton">
-                                    <img src="<?= ROOT_URI . '/images/mslc/shoppingCart.jpg' ?>" alt="Save icon"/> Add to cart
-                                </button>
+                                <?php
+                                if (!$this->isMe) {
+                                    ?>
+                                    <button type = "submit" name = "my-add-button" class = "addToCartButton">
+                                        <img src = "<?= ROOT_URI . '/images/mslc/shoppingCart.jpg' ?>" alt = "Save icon"/> Add to cart
+                                    </button>
+                                    <?php
+                                }
+                                ?>
                             </form>
                         </td>
                     </tr>
@@ -134,14 +144,16 @@ $rate = $this->rate; // Array ( [0] => Array ( [numberrate] => 0 [totalrate] => 
             }
             ?>
         </table>
-        <a href="https://www.facebook.com/dialog/feed?
-           app_id=<?= $appid ?>&
-           link=<?= ROOT_DOMAIN . "/product?id=" . $product["pid"] ?>&
-           picture=http://img12.imageshack.us/img12/3248/iknowu.jpg&
-           name=<?= $product["pname"] ?>&
-           caption=<?= "Style" ?>&
-           description=<?= $product['desc'] ?>&
-           redirect_uri=<?= ROOT_DOMAIN . "/product?id=" . $product["pid"] ?>"><img class="facebookShareButton" src="<?= ROOT_URI . "/images/mslc/facebookShare.jpg" ?>"></a>
+        <div class="productIndexControlPanel">
+            <a href="https://www.facebook.com/dialog/feed?
+               app_id=<?= $appid ?>&
+               link=<?= ROOT_DOMAIN . "/product?id=" . $product["pid"] ?>&
+               picture=http://img255.imageshack.us/img255/3248/iknowu.jpg&
+               name=<?= $product["pname"] ?>&
+               caption=<?= "Style" ?>&
+               description=<?= $product['desc'] ?>&
+               redirect_uri=<?= ROOT_DOMAIN . "/product?id=" . $product["pid"] ?>"><img class="facebookShareButton" src="<?= ROOT_URI . "/images/mslc/facebookShare.jpg" ?>"></a>
+        </div>
     </div>
 </div>
 <!-- --------------------------------------------------------------------- -->

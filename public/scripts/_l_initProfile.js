@@ -1,6 +1,49 @@
 $(document).ready(function(){
     // **** controller: profile
     // ***** action: index
+    
+    // ********* register send message
+    $("#profileIndexSendMessageForm").dialog({
+                autoOpen: false,
+                modal: true,
+                resizable: false,
+                draggable: false,
+                width: 400,
+                dialogClass: "signinDIV",
+                title: "Send Message"
+            });
+    $("#profileIndexSendMessage").click(function(){
+        $("#profileIndexSendMessageForm").dialog("open");
+    });
+    var profileIndexSendMessageFormValidate = $("#profileIndexSendMessageForm").validate();
+    
+    $("#profileIndexSendMessageButton").click(function(){
+        if(profileIndexSendMessageFormValidate.form()) {
+            $("#profileIndexSendMessageForm").dialog("close");
+            var dialog = $("#profileIndexSendMessageContent").val();
+            dialog = dialog.replace("<", "&lt;");
+            dialog = dialog.replace(">", "&gt;");
+            dialog = dialog.replace('\n', '<br>');
+            $.ajax({
+                url: "http://www.iknowu.com/iknowu/public/ajax/sendmessage?format=html",
+                data: {
+                    uid: $("#profileIndexSendMessageButton").attr("ref"),
+                    content: dialog
+                },
+                success: function(data) {
+                    if(data) {
+                        iknowu_alert("Message sent successfully.");
+                    } else {
+                        jAlert("Please try again later.", "Internal Server Error");
+                    }
+                },
+                error: function() {
+                    jAlert("Please check your connection.", "Unable to connect to server");
+                }
+            });
+        }
+    });
+    
     $("#profileIndexFollow").buttonset();
     $("#profileIndexFollowInput").bind("change", function(){
         if($(this).is(":checked")){

@@ -35,6 +35,9 @@ require_once 'Custom/mail.php';
 require_once 'Custom/moneyFormat.php';
 require_once 'Custom/chromephp.php';
 require_once 'Custom/tinyurl.php';
+require_once 'ElephantIO/Payload.php';
+require_once 'ElephantIO/Client.php';
+
 
 // Create application, bootstrap, and run
 $application = new Zend_Application(

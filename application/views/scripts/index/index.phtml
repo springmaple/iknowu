@@ -1,5 +1,8 @@
 <?php
 $arrays = $this->products;
+$colors = $this->colors;
+$brands = $this->brands;
+$category = $this->category;
 ?>
 
 <ul class="indexContentUl">
@@ -10,8 +13,11 @@ $arrays = $this->products;
      * **************************************************** */
     $cssClasses = array(
         "main" => "indexProductsDiv",
-        "title" => "indexProductTitle", 
-        "img" => "indexProductImg"
+        "title" => "indexProductTitle",
+        "img" => "indexProductImg",
+        "detail" => "indexProductDetailDiv",
+        "brand" => "indexProductBrand",
+        "category" => "indexProductCategory"
     );
     $htmlTarget = array(
         "new" => "_new"
@@ -19,13 +25,29 @@ $arrays = $this->products;
     foreach ($arrays as $product) {
         echo "<li>";
         echo "<div class={$cssClasses['main']}>";
-        // display item name & link
-        $url = $this->url(array("controller" => "product", "action" => "index")) . "?id=" . $product['pid'];
-        echo "<div><a class={$cssClasses['title']} target={$htmlTarget["new"]} href={$url}>{$product['pname']}</a></div>";
         // Display Image
         $imgUrl = ROOT_URI . "/images/products/" . $product['image'];
         echo "<div><img class={$cssClasses['img']} src={$imgUrl}></div>";
         // TODO display other details here
+
+        echo "<div class={$cssClasses['detail']}>";
+        // display item name & link
+        $url = $this->url(array("controller" => "product", "action" => "index")) . "?id=" . $product['pid'];
+        echo "<div><a class={$cssClasses['title']} target={$htmlTarget["new"]} href={$url}>{$product['pname']}</a></div>";
+        // display colors
+        echo "<div style='height: 30px'>";
+        foreach($colors[$product['pid']] as $color) {
+            echo "<span class='indexProductColorBox' style='background-color: #{$color}'></span>";
+        }
+        echo "</div>";
+        
+        // display category
+        echo "<div class={$cssClasses['category']}>Cat: {$category[$product['pid']]}</div>";
+        // display brand
+        echo "<div class={$cssClasses['brand']}>Brand: {$brands[$product['pid']]}</div>";
+        // display 
+        
+        echo "</div>";
         echo "</div>";
         echo "</li>";
     }

@@ -1,0 +1,38 @@
+<?php
+$noMessage = $this->noMessage;
+$chatUsers = $this->chatUsers;
+?>
+<?php if ($noMessage): ?>
+    <p>You do not have any message currently.</p>
+<?php else: ?>
+    <table class="updateIndexTable">
+        <tr>
+            <td class="updateIndexUserTd">
+                <ul class="updateIndexUserUl">
+                    <?php
+                    // ***** @Do: loop and get all subscribed users
+                    foreach ($chatUsers as $user):
+                        ?>
+                    <li class="updateIndexFilterLi" uid="<?= $user['uid'] ?>">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <img class="updateIndexUserImg" src="<?= ROOT_URI . "/images/avatars/{$user["img"]}" ?>">
+                                    </td>
+                                    <td>
+                                        <div class="updateIndexUserNickName" ><?= $user["nickname"] ?></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </li>
+                        <?php
+                    endforeach;
+                    ?>
+                </ul>
+            </td>
+            <td class="updateIndexContentTd">
+                <iframe id="updateIndexIframe" class="updateIndexIframe autoHeight" src="<?= ROOT_DOMAIN . "/message/messageframe?id=0" ?>"></iframe>
+            </td>
+        </tr>
+    </table>
+<?php endif; ?>

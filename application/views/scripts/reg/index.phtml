@@ -27,8 +27,21 @@
                         Password:
                     </td>
                     <td>
-                        <input type="password" name="regPassword" class="simpleBoxTextInput" required="true" minlength="6" maxlength="20" nowhitespace="true">
+                        <input type="password" name="regPassword" id="regPassword" class="simpleBoxTextInput" required="true" minlength="6" maxlength="20" nowhitespace="true">
                         <label for="regPassword" class="validation_err_msg error" generated="true"></label>
+                    </td>
+                    <td>
+                        <img class="profileEditQuestionMark" src="<?= ROOT_URI . "/images/mslc/questionMark.jpg" ?>">
+                        <span class="simpleBoxTooltip">Choose your preferred sign in pass.</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Reconfirm Password:
+                    </td>
+                    <td>
+                        <input type="password" name="reconfirmRegPassword" class="simpleBoxTextInput" required="true" equalTo="#regPassword">
+                        <label for="reconfirmRegPassword" class="validation_err_msg error" generated="true"></label>
                     </td>
                     <td>
                         <img class="profileEditQuestionMark" src="<?= ROOT_URI . "/images/mslc/questionMark.jpg" ?>">

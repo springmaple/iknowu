@@ -17,6 +17,7 @@ class UpdateController extends Zend_Controller_Action {
 
         $noFollow = false;
         $noUpdate = false;
+        $subscribedUsers = "";
 
         // ******************************************************
         // ************ Function Logics *************************
@@ -36,7 +37,8 @@ class UpdateController extends Zend_Controller_Action {
         $messageSql = $messageDb->select()
                 ->distinct()
                 ->from($messageDb, "fromuid")
-                ->where("touid = ?", $authSession->uid);
+                ->where("touid = ?", $authSession->uid)
+                ->where("type = ?", "update");
         $messageResult = $messageSql->query();
         if ($messageResult->rowCount() == 0) {
             $noUpdate = true;
@@ -56,7 +58,7 @@ class UpdateController extends Zend_Controller_Action {
         // ******************************************************
         // override the update amount
         $this->view->totalUpdate = 0;
-        
+
         $this->view->noFollow = $noFollow;
         $this->view->noUpdate = $noUpdate;
         $this->view->subscribedUsers = $subscribedUsers;
@@ -84,6 +86,7 @@ class UpdateController extends Zend_Controller_Action {
         // ***** @Do: check if this user has updates
         $sql = $messageDb->select()
                 ->from($messageDb)
+                ->where("type = ?", "update")
                 ->where("touid = ?", $authSession->uid);
         if ($id != 0) {
             $sql->where("fromuid = ?", $id);
@@ -104,7 +107,7 @@ class UpdateController extends Zend_Controller_Action {
             // ***** @Do: update the seen to 1
             foreach ($updates as $update) {
                 $data = array("seen" => 1);
-                $where = array("touid = ?" => $update["touid"], "fromuid = ?" => $update['fromuid'], "date = ?" => $update["date"]);
+                $where = array("touid = ?" => $update["touid"], "fromuid = ?" => $update['fromuid'], "date = ?" => $update["date"], "type = ?" => "update");
                 $messageDb->update($data, $where);
             }
         }

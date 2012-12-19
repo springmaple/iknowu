@@ -3,7 +3,12 @@
 class AdminController extends Zend_Controller_Action {
 
     public function init() {
-        
+        $authSession = new Zend_Session_Namespace("auth");
+        if ($this->_getParam("action") != "register" && $this->_getParam("action") != "registersubmit") {
+            if (!isset($authSession->uid) || $authSession->role != "super" && $authSession->role != "admin") {
+                throw new Zend_Controller_Action_Exception("Page not found", 404);
+            }
+        }
     }
 
     public function indexAction() {
@@ -51,7 +56,7 @@ class AdminController extends Zend_Controller_Action {
         if ($superAdminConfig["isset"]) {
             $error = "Super administrator already exists.";
         } else {
-                    $data = array("email" => $email, "password" => $bcrypt->customHashWith_MD5_Salt($password), "nickname" => $nickname, "role" => "super");
+            $data = array("email" => $email, "password" => $bcrypt->customHashWith_MD5_Salt($password), "nickname" => $nickname, "role" => "super");
             $result = $userDb->insert($data);
             $authSession->uid = $result;
             if (!$result) {

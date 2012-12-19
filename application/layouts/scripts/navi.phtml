@@ -4,6 +4,16 @@
             <li><a href="<?= $this->url(array("controller" => "index", "action" => "index")); ?>" target="_self">TRENDING</a></li>
             <li><a href="<?= $this->url(array("controller" => "about", "action" => "index")); ?>" target="_self">ABOUT</a></li>
             <li><a href="<?= $this->url(array("controller" => "product", "action" => "upload")); ?>"><strong>I WANT 2 SELL</strong></a></li>
+            <?php if($this->role == "super") {
+                ?>
+            <li><a href="<?= $this->url(array("controller" => "feedback", "action" => "view")); ?>" target="_self">View Feedback</a></li>
+            <?php
+            } else {
+                ?>
             <li><a href="<?= $this->url(array("controller" => "feedback", "action" => "index")); ?>" target="_self">FEEDBACK</a></li>
+            <?php
+            }
+            ?>
+            
         </ul>
 </div>

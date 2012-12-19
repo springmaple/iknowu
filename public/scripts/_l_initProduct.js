@@ -4,6 +4,27 @@
  */
 var productIndexMagnifyHref;
 $(document).ready(function(){
+    // *********** register close product 
+    $("#productIndexCloseProduct").click(function(){
+        var id = $(this).attr("ref1");
+        $.ajax({
+            url: "http://www.iknowu.com/iknowu/public/ajax/closeproduct?format=html",
+            dataType: "html",
+            data: {
+                id: id
+            },
+            success: function(data) {
+                if(data) {
+                    iknowu_alert("Successfully removed this product.");
+                    setTimeout(function(){
+                        window.location = "http://www.iknowu.com/iknowu/public/profile";
+                    }, 5000)
+                } else {
+                    jAlert("Error", "Unable to remove the particular product, please try again later.");
+                }
+            }
+        });
+    });
     
     // ********** register rating
     $(".rateit").bind("rated", function(event, value) {
@@ -326,7 +347,7 @@ $(document).ready(function(){
         rules: {
             productUploadName: {
                 required: true,
-                maxlength: 30
+                maxlength: 100
             },
             productUploadPrice: {
                 required: true,
@@ -337,7 +358,7 @@ $(document).ready(function(){
                 required: true
             },
             productUploadDesc: {
-                maxlength: 200
+                maxlength: 500
             }
         }
     });

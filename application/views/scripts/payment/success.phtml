@@ -1,0 +1,14 @@
+<?php
+
+$error = $this->error;
+if (!empty($error)) {
+    echo "<h4>{$error}</h4>";
+} else {
+    ?>
+    <p><h4>Your order has been submitted to the corresponding seller successfully.</h4></p>
+    <p><a href="<?= $this->url(array("controller"=>"profile", "action"=>"order")) ?>">Click here to view your order status</a></p>
+
+    <?php
+
+}
+?>

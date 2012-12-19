@@ -26,6 +26,8 @@ class AjaxController extends Zend_Controller_Action {
                 ->addActionContext('follow', 'html')
                 ->addActionContext('deletefeedback', 'html')
                 ->addActionContext('unreadfeedback', 'html')
+                ->addActionContext('closeproduct', 'html')
+                ->addActionContext('sendmessage', 'html')
                 ->initContext();
     }
 
@@ -292,7 +294,7 @@ class AjaxController extends Zend_Controller_Action {
          */
         $authSession = new Zend_Session_Namespace("auth");
         $uid = $authSession->uid;
-        if (empty($uid)) {
+        if (!isset($authSession->uid)) {
             // this user is not logged in yet
             echo false;
         } else {
@@ -303,11 +305,15 @@ class AjaxController extends Zend_Controller_Action {
             $result = $sql->query();
             if ($result->rowCount() < 1) {
                 // this user not rated before
-                $array = array("uid" => $uid, "pid" => $this->_getParam("pid"), "rate" => $this->_getParam("rate"), "date" => date("Y-m-d H:i:s"));
+                $rate = $this->_getParam("rate");
+                $rating = $rate / 10;
+                $array = array("uid" => $uid, "pid" => $this->_getParam("pid"), "rate" => $rate, "rating" => $rating, "date" => date("Y-m-d H:i:s"));
                 $rateDb->insert($array);
             } else {
                 // this user rated before, just update the previous rate value and date
-                $array = array("rate" => $this->_getParam("rate"), "date" => date("Y-m-d H:i:s"));
+                $rate = $this->_getParam("rate");
+                $rating = $rate / 10;
+                $array = array("rate" => $rate, "rating" => $rating, "date" => date("Y-m-d H:i:s"));
                 $where = array("uid = ?" => $uid, "pid = ?" => $this->_getParam("pid"));
                 $rateDb->update($array, $where);
             }
@@ -389,6 +395,36 @@ class AjaxController extends Zend_Controller_Action {
 
         $result = $feedbackDb->update(array("seen" => 0), array("email = ?" => $email, "date = ?" => $date));
         if ($result) {
+            echo true;
+        } else {
+            echo false;
+        }
+    }
+
+    public function closeproductAction() {
+        $id = $this->_getParam("id");
+
+        $productDb = new Application_Model_DbTable_Product;
+        $result = $productDb->update(array("close" => 1), array("pid = ?" => $id));
+        if ($result) {
+            echo true;
+        } else {
+            echo false;
+        }
+    }
+
+    public function sendmessageAction() {
+        $authSession = new Zend_Session_Namespace("auth");
+        $messageDb = new Application_Model_DbTable_Message;
+
+        $touid = $this->_getParam("uid");
+        $fromuid = $authSession->uid;
+        $content = $this->_getParam("content");
+
+        $data = array("fromuid" => $fromuid, "touid" => $touid, "date" => date("Y-m-d H:i:s"), "content" => $content, "seen" => 0, "type" => "message");
+
+        $result = $messageDb->insert($data);
+        if($result){
             echo true;
         } else {
             echo false;
